@@ -1,0 +1,14 @@
+D:\WorkSpace\videosearch\VideoSearch\bin\Debug\VideoSearch.exe.config
+D:\WorkSpace\videosearch\VideoSearch\bin\Debug\VideoSearch.exe
+D:\WorkSpace\videosearch\VideoSearch\bin\Debug\VideoSearch.pdb
+D:\WorkSpace\videosearch\VideoSearch\obj\Debug\VideoSearch.DownLoadForm.resources
+D:\WorkSpace\videosearch\VideoSearch\obj\Debug\VideoSearch.ExploreForm.resources
+D:\WorkSpace\videosearch\VideoSearch\obj\Debug\VideoSearch.MainForm.resources
+D:\WorkSpace\videosearch\VideoSearch\obj\Debug\VideoSearch.SetForm.resources
+D:\WorkSpace\videosearch\VideoSearch\obj\Debug\VideoSearch.Properties.Resources.resources
+D:\WorkSpace\videosearch\VideoSearch\obj\Debug\VideoSearch.csproj.GenerateResource.Cache
+D:\WorkSpace\videosearch\VideoSearch\obj\Debug\VideoSearch.exe
+D:\WorkSpace\videosearch\VideoSearch\obj\Debug\VideoSearch.pdb
+D:\WorkSpace\videosearch\VideoSearch\obj\Debug\VideoSearch.csprojResolveAssemblyReference.cache
+D:\WorkSpace\videosearch\VideoSearch\obj\Debug\VideoSearch.ScheduleListView.resources
+D:\WorkSpace\videosearch\VideoSearch\obj\Debug\VideoSearch.AboutSoftWareForm.resources

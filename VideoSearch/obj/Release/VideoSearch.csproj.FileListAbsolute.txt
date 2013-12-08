@@ -1,0 +1,12 @@
+D:\WorkSpace\videosearch\VideoSearch\bin\Release\VideoSearch.exe.config
+D:\WorkSpace\videosearch\VideoSearch\bin\Release\VideoSearch.exe
+D:\WorkSpace\videosearch\VideoSearch\bin\Release\VideoSearch.pdb
+D:\WorkSpace\videosearch\VideoSearch\obj\Release\VideoSearch.DownLoadForm.resources
+D:\WorkSpace\videosearch\VideoSearch\obj\Release\VideoSearch.ExploreForm.resources
+D:\WorkSpace\videosearch\VideoSearch\obj\Release\VideoSearch.MainForm.resources
+D:\WorkSpace\videosearch\VideoSearch\obj\Release\VideoSearch.SetForm.resources
+D:\WorkSpace\videosearch\VideoSearch\obj\Release\VideoSearch.Properties.Resources.resources
+D:\WorkSpace\videosearch\VideoSearch\obj\Release\VideoSearch.csproj.GenerateResource.Cache
+D:\WorkSpace\videosearch\VideoSearch\obj\Release\VideoSearch.exe
+D:\WorkSpace\videosearch\VideoSearch\obj\Release\VideoSearch.pdb
+D:\WorkSpace\videosearch\VideoSearch\obj\Release\VideoSearch.csprojResolveAssemblyReference.cache
