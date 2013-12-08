@@ -177,7 +177,7 @@ namespace VideoSearch
                 recordList.BeginUpdate();
                 recordList.Items.Clear();
                 ListViewItem item;
-                if (dataList.Count == 1)
+                if (dataList.Count == 1 && dataList[0].movieList.Count>0)
                 {
                     this.recordList.Columns[1].Text = "下载地址";
                     this.recordList.CheckBoxes = true;
@@ -316,6 +316,10 @@ namespace VideoSearch
         }
         private void addDownloadQueue(short decryptModel)
         {
+            if (Constant.folderBrowserDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
             if (Constant.downloadForm == null)
             {
                 Constant.downloadForm = DownLoadForm.getInterface();
@@ -328,6 +332,7 @@ namespace VideoSearch
             {
                 movie = this.list.getNow()[0].movieList[this.recordList.SelectedItems[0].Index];
                 movie.decryptModel = decryptModel;
+                movie.path = Constant.folderBrowserDialog.SelectedPath;
                 Constant.downloadForm.addQueue(movie);
             }
             else
@@ -336,8 +341,8 @@ namespace VideoSearch
                 {
                     movie = this.list.getNow()[0].movieList[item.Index];
                     movie.decryptModel = decryptModel;
+                    movie.path = Constant.folderBrowserDialog.SelectedPath;
                     Constant.downloadForm.addQueue(movie);
-                    Constant.downloadForm.addQueue(this.list.getNow()[0].movieList[item.Index]);
                 }
             }
         }

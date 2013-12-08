@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -26,7 +27,7 @@ namespace VideoSearch
         {
             this.queueList.Add(movie);
             ListViewItem item = new ListViewItem(movie.name);
-            item.SubItems.Add("0.5");
+            item.SubItems.Add("0.0");
             item.SubItems.Add("0.00 MB/S");
             item.SubItems.Add("正在等待");
             this.scheduleListView.Items.Add(item);
@@ -68,14 +69,17 @@ namespace VideoSearch
             string sch;
             while (this.isDownloading)
             {
-                sch = this.queueList[nowQueueIndex].getShcedule();
-                this.updateListviewItem(nowQueueIndex, 1, sch);
-                this.updateListviewItem(nowQueueIndex, 2,this.queueList[nowQueueIndex].getSpeed());
-                if (sch.Equals("1"))
+                if (!this.queueList[nowQueueIndex].cancle)
                 {
-                    this.updateListviewItem(nowQueueIndex, 3, "合并缓存");
+                    sch = this.queueList[nowQueueIndex].getShcedule();
+                    this.updateListviewItem(nowQueueIndex, 1, sch);
+                    this.updateListviewItem(nowQueueIndex, 2, this.queueList[nowQueueIndex].getSpeed());
+                    if (sch.Equals("1"))
+                    {
+                        this.updateListviewItem(nowQueueIndex, 3, "合并缓存");
+                    }
+                    Thread.Sleep(100);
                 }
-                Thread.Sleep(100);
             }
         }
         private delegate void UPDATELISTVIEWITEM(int index,int columns,string value);
@@ -89,6 +93,35 @@ namespace VideoSearch
             else
             {
                 this.scheduleListView.Items[index].SubItems[columns].Text = value;
+            }
+        }
+
+        private void openFile_Click(object sender, EventArgs e)
+        {
+            if (this.scheduleListView.SelectedItems.Count > 0)
+            {
+                Process.Start(this.queueList[this.scheduleListView.SelectedItems[0].Index].reallyPath());
+            }
+        }
+
+        private void removeThisQueue_Click(object sender, EventArgs e)
+        {
+            //if (this.scheduleListView.SelectedItems.Count > 0)
+            //{
+            //    this.queueList[this.scheduleListView.SelectedItems[0].Index].cancleDownload();
+            //    this.scheduleListView.SelectedItems[0].SubItems[1].Text = 100+"";
+            //    this.scheduleListView.SelectedItems[0].SubItems[2].Text = "0.00 MB/s";
+            //    this.scheduleListView.SelectedItems[0].SubItems[3].Text = MsgString.CANCLE_DOWNLOAD_QUEUE;
+            //}
+        }
+
+        private void openDir_Click(object sender, EventArgs e)
+        {
+            if (this.scheduleListView.SelectedItems.Count > 0)
+            {
+                System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo("Explorer.exe");
+                psi.Arguments = "/e,/select," + this.queueList[this.scheduleListView.SelectedItems[0].Index].reallyPath();
+                System.Diagnostics.Process.Start(psi);
             }
         }
         //private void button1_Click(object sender, EventArgs e)

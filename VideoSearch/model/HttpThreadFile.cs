@@ -16,13 +16,14 @@ namespace VideoSearch
         public string[] tempFileName;//每个线程接收文件的文件名
         public int[] threadFileStartIndex;//每个线程接收文件的起始位置
         public int[] threadFileSize;//每个线程接收文件的大小        
-        public bool isStartMerge;//文件合并标志
+        public bool isStartMerge = false;//文件合并标志
         public int threadCount;//进程数
         public long fileSize = 0;
         public long haveDownSize = 0;        
         private DateTime startTime;
         private short decryptModel;
         private Thread[] threadList;
+        private bool cancle = false;
         public HttpThreadFile(string path, string url, short decryptModel)
         {
             this.filePath = path;
@@ -49,11 +50,15 @@ namespace VideoSearch
         {
             for (int i = 0; i < this.threadList.Length; i++)
             {
-                this.threadList[i].Abort();
+                if (this.threadList[i].ThreadState != ThreadState.Stopped)
+                {
+                    this.threadList[i].Abort();
+                }
             }
+            this.cancle = true;
         }
 
-        public Message startDownload()
+        public Message startDownload(string path)
         {
             Message msg = new Message();
             ServicePointManager.DefaultConnectionLimit = 512;
@@ -94,7 +99,7 @@ namespace VideoSearch
                     threadList[j].Start();
                 }
                 //启动合并各线程接收的文件的线程
-                this.mergeFile();
+                this.mergeFile(path);
                 msg.isSucceed = true;
                 msg.msg = MsgString.DOWNLOAD_MOVIE_SUCCESS;
                 return msg;
@@ -106,17 +111,19 @@ namespace VideoSearch
                 return msg;
             }
         }
-        public void mergeFile()
+
+        public void mergeFile(string path)
         {
-            this.isStartMerge = true;
-            while (!this.isStartMerge)//等待
+            bool flag = true;
+            while (!flag)//等待
             {
-                this.isStartMerge = true;
+                if (this.cancle) return;
+                flag = true;
                 for (int i = 0; i < this.threadCount; i++)
                 {
                     if (this.threadFlag[i] == false)
                     {
-                        this.isStartMerge = false;
+                        flag = false;
                         Thread.Sleep(1000);
                         break;
                     }
@@ -126,7 +133,7 @@ namespace VideoSearch
             FileStream fstemp;
             int readfile;
             byte[] bytes = new byte[512];
-            fs = new FileStream(this.filePath, System.IO.FileMode.Create);
+            fs = new FileStream(path, System.IO.FileMode.Create);
             for (int k = 0; k < this.threadCount; k++)
             {
                 if (!this.threadFlag[k])

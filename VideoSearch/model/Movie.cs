@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,9 +16,11 @@ namespace VideoSearch
         private string code;
         public string name;
         public string url;
-        private string type;
+        public string type;
         private HttpThreadFile httpThreadFile = null;
         public short decryptModel;
+        public string path=Constant.DEFAULT_DOWNLOAD_DIR;
+        public bool cancle = false;
         public Movie(string name,string code)
         {
             this.name = name;
@@ -70,15 +73,30 @@ namespace VideoSearch
         public Message download()
         {
             httpThreadFile = new HttpThreadFile(name + this.type, this.url, decryptModel);
-            return httpThreadFile.startDownload();
+            return httpThreadFile.startDownload(this.path + this.name + this.type);
         }
         public void cancleDownload()
         {
             if (httpThreadFile != null)
             {
+                if (httpThreadFile.isStartMerge) return;
                 httpThreadFile.stopDownload();
             }
-
+            this.httpThreadFile = null;
+            while (true)
+            {
+                try
+                {
+                    File.Delete(this.path + this.name + this.type);
+                }
+                catch
+                {
+                    Thread.Sleep(1000);
+                    continue;
+                }
+                break;
+            }
+            this.cancle = true;
         }
         public string getShcedule()
         {
@@ -95,5 +113,10 @@ namespace VideoSearch
             if (Movie.allCount == 0) return true;
             return false;
         }
+        public string reallyPath()
+        {
+            return this.path + this.name + this.type;
+        }
+
     }
 }

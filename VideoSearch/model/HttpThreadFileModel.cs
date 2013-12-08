@@ -76,7 +76,7 @@ namespace VideoSearch
                     }
                     else
                     {
-
+                        //自动解密
                     }
                 }
                 while (nreadsize > 0)

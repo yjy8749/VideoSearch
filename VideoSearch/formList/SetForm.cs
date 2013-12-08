@@ -71,9 +71,9 @@ namespace VideoSearch
                         {
                             this.serviceAddressCombo.Items.Add(new ComboBoxItem(key, (string)servetList[key]));
                         }
-                        this.serviceAddressCombo.Items.Add(new ComboBoxItem("--更新服务器列表", "0"));
-                        this.serviceAddressCombo.Items.Add(new ComboBoxItem("--报告新的服务器地址", "1"));
-                        this.serviceAddressCombo.Items.Add(new ComboBoxItem("--没有我的学校", "2"));
+                        this.serviceAddressCombo.Items.Add(new ComboBoxItem("==更新服务器列表", "0"));
+                        this.serviceAddressCombo.Items.Add(new ComboBoxItem("==报告新的服务器地址", "1"));
+                        this.serviceAddressCombo.Items.Add(new ComboBoxItem("==没有我的学校", "2"));
                         break;
                     }
                 case "1":

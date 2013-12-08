@@ -43,5 +43,9 @@ namespace VideoSearch
         public static XmlFileModel totalInfo = null;
         public static XmlFileModel config = null;
         public static readonly FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+        static Constant()
+        {
+            folderBrowserDialog.SelectedPath = DEFAULT_DOWNLOAD_DIR;
+        }
     }
 }

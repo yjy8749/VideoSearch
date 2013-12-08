@@ -34,7 +34,6 @@
             this.downloadMenue = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openFile = new System.Windows.Forms.ToolStripMenuItem();
             this.openDir = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeThisQueue = new System.Windows.Forms.ToolStripMenuItem();
             this.scheduleListView = new VideoSearch.ScheduleListView();
             this.nameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.scheduleColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -47,28 +46,23 @@
             // 
             this.downloadMenue.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openFile,
-            this.openDir,
-            this.removeThisQueue});
+            this.openDir});
             this.downloadMenue.Name = "downloadMenue";
-            this.downloadMenue.Size = new System.Drawing.Size(149, 70);
+            this.downloadMenue.Size = new System.Drawing.Size(153, 70);
             // 
             // openFile
             // 
             this.openFile.Name = "openFile";
-            this.openFile.Size = new System.Drawing.Size(148, 22);
+            this.openFile.Size = new System.Drawing.Size(152, 22);
             this.openFile.Text = "打开文件";
+            this.openFile.Click += new System.EventHandler(this.openFile_Click);
             // 
             // openDir
             // 
             this.openDir.Name = "openDir";
-            this.openDir.Size = new System.Drawing.Size(148, 22);
+            this.openDir.Size = new System.Drawing.Size(152, 22);
             this.openDir.Text = "打开文件目录";
-            // 
-            // removeThisQueue
-            // 
-            this.removeThisQueue.Name = "removeThisQueue";
-            this.removeThisQueue.Size = new System.Drawing.Size(148, 22);
-            this.removeThisQueue.Text = "取消此任务";
+            this.openDir.Click += new System.EventHandler(this.openDir_Click);
             // 
             // scheduleListView
             // 
@@ -142,7 +136,6 @@
         private System.Windows.Forms.ContextMenuStrip downloadMenue;
         private System.Windows.Forms.ToolStripMenuItem openFile;
         private System.Windows.Forms.ToolStripMenuItem openDir;
-        private System.Windows.Forms.ToolStripMenuItem removeThisQueue;
 
     }
 }
