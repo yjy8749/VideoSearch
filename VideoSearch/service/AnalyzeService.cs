@@ -46,5 +46,23 @@ namespace VideoSearch
             msg.msg = MsgString.ANALYZE_SUCCESS.Replace("%num%", msg.movieCataList.Count.ToString());
             return msg;
         }
+        public static Message newResource()
+        {
+            Message msg = new Message();
+            msg.movieCataList = SearchService.searchMovieCatasaAfter(DateTime.Now.AddDays(-7));
+            msg.movieCataList = msg.movieCataList.OrderByDescending<MovieCata, float>(mc => mc.similarity).ToList<MovieCata>();
+            msg.isSucceed = true;
+            msg.msg = MsgString.ANALYZE_SUCCESS.Replace("%num%", msg.movieCataList.Count.ToString());
+            return msg;
+        }
+        public static Message allResource()
+        {
+            Message msg = new Message();
+            msg.movieCataList = SearchService.searchAllMovieCatas();
+            msg.movieCataList = msg.movieCataList.OrderByDescending<MovieCata, string>(mc => mc.describe).ToList<MovieCata>();
+            msg.isSucceed = true;
+            msg.msg = MsgString.ANALYZE_SUCCESS.Replace("%num%", msg.movieCataList.Count.ToString());
+            return msg;
+        }
     }
 }

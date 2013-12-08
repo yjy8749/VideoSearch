@@ -12,7 +12,7 @@ namespace VideoSearch
         public static readonly string PUT_SERVER_INFO_URL = "http://www.baidu.com";
         public static readonly string HOW_TO_GET_MY_SCHOOL_SERVER = "http://www.baidu.com";
         public static string SERVICE_ADDRESS = "http://movie.zzti.edu.cn/";
-        public static string DEFAULT_DOWNLOAD_DIR = "";
+        public static string DEFAULT_DOWNLOAD_DIR = System.Environment.CurrentDirectory;
         public static readonly bool   IS_USE_HTTPS = false;
         public static readonly string SERVICE_TOTAL_XML_URL = @"mov/xml/Total.xml";
         public static readonly string TOTAL_FILE_PATH = "search_info.ahnu";

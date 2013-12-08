@@ -26,7 +26,8 @@ namespace VideoSearch
             {
                 Movie.allCount++;
             }
-            ThreadPool.QueueUserWorkItem(new WaitCallback(analyze));           
+            ThreadPool.QueueUserWorkItem(new WaitCallback(analyze));
+            this.url = "正在解析地址";
         }
         private void analyze(object o)
         {

@@ -48,6 +48,8 @@
             this.serviceAddressCombo.Name = "serviceAddressCombo";
             this.serviceAddressCombo.Size = new System.Drawing.Size(306, 20);
             this.serviceAddressCombo.TabIndex = 0;
+            this.serviceAddressCombo.Items.Add(new ComboBoxItem(Constant.SERVICE_ADDRESS,Constant.SERVICE_ADDRESS));
+            this.serviceAddressCombo.SelectedItem=this.serviceAddressCombo.Items[0];
             this.serviceAddressCombo.SelectedIndexChanged += new System.EventHandler(this.serviceAddressCombo_SelectedIndexChanged);
             this.serviceAddressCombo.Click += new System.EventHandler(this.serviceAddressCombo_Click);
             // 
@@ -95,6 +97,7 @@
             this.defaultDownloadDirTextBox.ReadOnly = true;
             this.defaultDownloadDirTextBox.Size = new System.Drawing.Size(306, 21);
             this.defaultDownloadDirTextBox.TabIndex = 6;
+            this.defaultDownloadDirTextBox.Text = Constant.DEFAULT_DOWNLOAD_DIR;
             this.defaultDownloadDirTextBox.Click += new System.EventHandler(this.defaultDownloadDirTextBox_Click);
             // 
             // SetForm

@@ -78,5 +78,14 @@ namespace VideoSearch
             }
             return table;
         }
+        public static void initConfig()
+        {
+            if (File.Exists(Constant.CONFIG_FILE_PATH))
+            {
+                XmlFileModel config = new XmlFileModel(Constant.CONFIG_FILE_PATH);
+                Constant.SERVICE_ADDRESS = config.getNode("serviceIp").InnerText;
+                Constant.DEFAULT_DOWNLOAD_DIR = config.getNode("defaultDir").InnerText;
+            }
+        }
     }
 }

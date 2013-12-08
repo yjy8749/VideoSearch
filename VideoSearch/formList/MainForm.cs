@@ -24,6 +24,7 @@ namespace VideoSearch
         private MainForm()
         {
             InitializeComponent();
+            XMLService.initConfig();
             Constant.mainForm = this;
         }
         private static readonly MainForm INTERFACE=new MainForm();
@@ -90,12 +91,32 @@ namespace VideoSearch
 
         private void newResourceBtn_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Constant.YESTERDAY_DATE);
+            Message msg = AnalyzeService.newResource();
+            if (msg.isSucceed)
+            {
+                this.list.add(msg.movieCataList);
+                this.showDataInRecordList(msg.movieCataList);
+                this.setRunState(msg.msg);
+            }
+            else
+            {
+                this.setRunState(msg.msg);
+            }
         }
 
         private void allResourceBtn_Click(object sender, EventArgs e)
         {
-
+            Message msg = AnalyzeService.allResource();
+            if (msg.isSucceed)
+            {
+                this.list.add(msg.movieCataList);
+                this.showDataInRecordList(msg.movieCataList);
+                this.setRunState(msg.msg);
+            }
+            else
+            {
+                this.setRunState(msg.msg);
+            }
         }
 
         private void showDownloadFormBtn_Click(object sender, EventArgs e)
