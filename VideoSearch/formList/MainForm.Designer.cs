@@ -40,6 +40,9 @@
             this.newResourceBtn = new System.Windows.Forms.PictureBox();
             this.allResourceBtn = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.recordList = new VideoSearch.ScheduleListView();
+            this.sourceName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.addressAndInfo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.showDownloadFormBtn = new System.Windows.Forms.PictureBox();
             this.showExploreModelBtn = new System.Windows.Forms.PictureBox();
             this.showOnlineHelpBtn = new System.Windows.Forms.PictureBox();
@@ -56,9 +59,7 @@
             this.downloadForciblyModel = new System.Windows.Forms.ToolStripMenuItem();
             this.copyDownloadUrl = new System.Windows.Forms.ToolStripMenuItem();
             this.selectedOther = new System.Windows.Forms.ToolStripMenuItem();
-            this.recordList = new VideoSearch.ScheduleListView();
-            this.sourceName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.addressAndInfo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.justDownload = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.forwardBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.backBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.goBtn)).BeginInit();
@@ -158,6 +159,37 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(547, 335);
             this.panel1.TabIndex = 8;
+            // 
+            // recordList
+            // 
+            this.recordList.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.recordList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.recordList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.sourceName,
+            this.addressAndInfo});
+            this.recordList.FullRowSelect = true;
+            this.recordList.GridLines = true;
+            this.recordList.Location = new System.Drawing.Point(-1, 0);
+            this.recordList.Name = "recordList";
+            this.recordList.OwnerDraw = true;
+            this.recordList.ProgressColor = System.Drawing.Color.Green;
+            this.recordList.ProgressColumIndex = -1;
+            this.recordList.ProgressTextColor = System.Drawing.Color.Black;
+            this.recordList.Size = new System.Drawing.Size(547, 352);
+            this.recordList.TabIndex = 2;
+            this.recordList.UseCompatibleStateImageBehavior = false;
+            this.recordList.View = System.Windows.Forms.View.Details;
+            this.recordList.DoubleClick += new System.EventHandler(this.analyzeMovieCata_Click);
+            // 
+            // sourceName
+            // 
+            this.sourceName.Text = "资源名称";
+            this.sourceName.Width = 101;
+            // 
+            // addressAndInfo
+            // 
+            this.addressAndInfo.Text = "下载地址";
+            this.addressAndInfo.Width = 446;
             // 
             // showDownloadFormBtn
             // 
@@ -272,10 +304,11 @@
             this.movieMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.downloadAutoModel,
             this.downloadForciblyModel,
+            this.justDownload,
             this.copyDownloadUrl,
             this.selectedOther});
             this.movieMenu.Name = "movieMenu";
-            this.movieMenu.Size = new System.Drawing.Size(213, 92);
+            this.movieMenu.Size = new System.Drawing.Size(213, 136);
             // 
             // downloadAutoModel
             // 
@@ -305,36 +338,12 @@
             this.selectedOther.Text = "全选/反选";
             this.selectedOther.Click += new System.EventHandler(this.selectedOther_Click);
             // 
-            // recordList
+            // justDownload
             // 
-            this.recordList.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.recordList.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.recordList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.sourceName,
-            this.addressAndInfo});
-            this.recordList.FullRowSelect = true;
-            this.recordList.GridLines = true;
-            this.recordList.Location = new System.Drawing.Point(-1, 0);
-            this.recordList.Name = "recordList";
-            this.recordList.OwnerDraw = true;
-            this.recordList.ProgressColor = System.Drawing.Color.Green;
-            this.recordList.ProgressColumIndex = -1;
-            this.recordList.ProgressTextColor = System.Drawing.Color.Black;
-            this.recordList.Size = new System.Drawing.Size(547, 352);
-            this.recordList.TabIndex = 2;
-            this.recordList.UseCompatibleStateImageBehavior = false;
-            this.recordList.View = System.Windows.Forms.View.Details;
-            this.recordList.DoubleClick += new System.EventHandler(this.analyzeMovieCata_Click);
-            // 
-            // sourceName
-            // 
-            this.sourceName.Text = "资源名称";
-            this.sourceName.Width = 101;
-            // 
-            // addressAndInfo
-            // 
-            this.addressAndInfo.Text = "下载地址";
-            this.addressAndInfo.Width = 446;
+            this.justDownload.Name = "justDownload";
+            this.justDownload.Size = new System.Drawing.Size(212, 22);
+            this.justDownload.Text = "下载所选视频(直接下载)";
+            this.justDownload.Click += new System.EventHandler(this.justDownload_Click);
             // 
             // MainForm
             // 
@@ -411,6 +420,7 @@
         private System.Windows.Forms.ToolStripMenuItem downloadForciblyModel;
         private System.Windows.Forms.ToolStripMenuItem copyDownloadUrl;
         private System.Windows.Forms.ToolStripMenuItem selectedOther;
+        private System.Windows.Forms.ToolStripMenuItem justDownload;
     }
 }
 

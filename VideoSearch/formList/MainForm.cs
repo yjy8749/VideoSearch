@@ -314,6 +314,10 @@ namespace VideoSearch
         {
             this.addDownloadQueue(Constant.AUTO_DECRYPT_MODEL);
         }
+        private void justDownload_Click(object sender, EventArgs e)
+        {
+            this.addDownloadQueue(Constant.NO_DECRYPT_MODEL);
+        }
         private void addDownloadQueue(short decryptModel)
         {
             if (Constant.folderBrowserDialog.ShowDialog() != DialogResult.OK)
@@ -346,5 +350,6 @@ namespace VideoSearch
                 }
             }
         }
+
     }
 }

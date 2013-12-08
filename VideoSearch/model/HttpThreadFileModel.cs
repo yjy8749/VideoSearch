@@ -74,9 +74,15 @@ namespace VideoSearch
                             nbytes[i] = (byte)~nbytes[i];
                         }
                     }
-                    else
+                    if (this.decryptModel == Constant.AUTO_DECRYPT_MODEL)
                     {
-                        //自动解密
+                        if (!FileCheck.checkFileType(nbytes))
+                        {
+                            for (int i = 0; i < 160; i++)
+                            {
+                                nbytes[i] = (byte)~nbytes[i];
+                            }
+                        }
                     }
                 }
                 while (nreadsize > 0)

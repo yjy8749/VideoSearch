@@ -35,6 +35,7 @@ namespace VideoSearch
         public static readonly int DOWNLOAD_THREAD_COUNT = 8;
         public static readonly short AUTO_DECRYPT_MODEL = 0;
         public static readonly short FORCIBLY_DECRYPT_MODEL = 1;
+        public static readonly short NO_DECRYPT_MODEL = -1;
 
         public static SetForm setForm = null;
         public static ExploreForm exploreForm = null;
