@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace VideoSearch
 {
     class Constant
     {
         public static readonly string ONLINE_HELP_URL = "http://www.baidu.com";
-        public static readonly string SERVICE_ADDRESS = "http://movie.zzti.edu.cn";
+        public static readonly string PUT_SERVER_INFO_URL = "http://www.baidu.com";
+        public static readonly string HOW_TO_GET_MY_SCHOOL_SERVER = "http://www.baidu.com";
+        public static string SERVICE_ADDRESS = "http://movie.zzti.edu.cn/";
+        public static string DEFAULT_DOWNLOAD_DIR = "";
         public static readonly bool   IS_USE_HTTPS = false;
-        public static readonly string SERVICE_TOTAL_XML_URL = @"/mov/xml/Total.xml";
+        public static readonly string SERVICE_TOTAL_XML_URL = @"mov/xml/Total.xml";
         public static readonly string TOTAL_FILE_PATH = "search_info.ahnu";
         public static readonly string CONFIG_FILE_PATH = "config.ahnu";
+        public static readonly string SERVER_LIST_FILE_URL = "http://127.0.0.1:8000/server_list.ahnu";
+        public static readonly string SERVET_LIST_FILE_PATH = "server_list.ahnu";
         public static readonly string SERVIC_CHECK_REGEX = @"http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?/";
         public static readonly string TODAY_DATE = DateTime.Now.ToString("yyyyMMdd");
         public static readonly string YESTERDAY_DATE = DateTime.Now.AddDays(-1).ToString("yyyyMMdd"); 
@@ -36,5 +42,6 @@ namespace VideoSearch
         public static MainForm mainForm = null;
         public static XmlFileModel totalInfo = null;
         public static XmlFileModel config = null;
+        public static readonly FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
     }
 }

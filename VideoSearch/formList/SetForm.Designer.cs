@@ -34,21 +34,22 @@
             this.sourceCodeAddressBtn = new System.Windows.Forms.PictureBox();
             this.resetSoftwareBtn = new System.Windows.Forms.PictureBox();
             this.setFormSureBtn = new System.Windows.Forms.PictureBox();
-            this.aboutSoftWare = new System.Windows.Forms.PictureBox();
             this.defaultDownloadDirTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.sourceCodeAddressBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.resetSoftwareBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.setFormSureBtn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.aboutSoftWare)).BeginInit();
             this.SuspendLayout();
             // 
             // serviceAddressCombo
             // 
+            this.serviceAddressCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.serviceAddressCombo.FormattingEnabled = true;
             this.serviceAddressCombo.Location = new System.Drawing.Point(133, 110);
             this.serviceAddressCombo.Name = "serviceAddressCombo";
             this.serviceAddressCombo.Size = new System.Drawing.Size(306, 20);
             this.serviceAddressCombo.TabIndex = 0;
+            this.serviceAddressCombo.SelectedIndexChanged += new System.EventHandler(this.serviceAddressCombo_SelectedIndexChanged);
+            this.serviceAddressCombo.Click += new System.EventHandler(this.serviceAddressCombo_Click);
             // 
             // sourceCodeAddressBtn
             // 
@@ -60,6 +61,7 @@
             this.sourceCodeAddressBtn.Size = new System.Drawing.Size(121, 38);
             this.sourceCodeAddressBtn.TabIndex = 1;
             this.sourceCodeAddressBtn.TabStop = false;
+            this.sourceCodeAddressBtn.Click += new System.EventHandler(this.sourceCodeAddressBtn_Click);
             // 
             // resetSoftwareBtn
             // 
@@ -71,6 +73,7 @@
             this.resetSoftwareBtn.Size = new System.Drawing.Size(121, 38);
             this.resetSoftwareBtn.TabIndex = 2;
             this.resetSoftwareBtn.TabStop = false;
+            this.resetSoftwareBtn.Click += new System.EventHandler(this.resetSoftwareBtn_Click);
             // 
             // setFormSureBtn
             // 
@@ -84,18 +87,6 @@
             this.setFormSureBtn.TabStop = false;
             this.setFormSureBtn.Click += new System.EventHandler(this.setFormSureBtn_Click);
             // 
-            // aboutSoftWare
-            // 
-            this.aboutSoftWare.BackColor = System.Drawing.Color.Transparent;
-            this.aboutSoftWare.ErrorImage = null;
-            this.aboutSoftWare.InitialImage = null;
-            this.aboutSoftWare.Location = new System.Drawing.Point(365, 43);
-            this.aboutSoftWare.Name = "aboutSoftWare";
-            this.aboutSoftWare.Size = new System.Drawing.Size(74, 28);
-            this.aboutSoftWare.TabIndex = 5;
-            this.aboutSoftWare.TabStop = false;
-            this.aboutSoftWare.Click += new System.EventHandler(this.aboutSoftWare_Click);
-            // 
             // defaultDownloadDirTextBox
             // 
             this.defaultDownloadDirTextBox.BackColor = System.Drawing.Color.White;
@@ -104,6 +95,7 @@
             this.defaultDownloadDirTextBox.ReadOnly = true;
             this.defaultDownloadDirTextBox.Size = new System.Drawing.Size(306, 21);
             this.defaultDownloadDirTextBox.TabIndex = 6;
+            this.defaultDownloadDirTextBox.Click += new System.EventHandler(this.defaultDownloadDirTextBox_Click);
             // 
             // SetForm
             // 
@@ -112,7 +104,6 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(451, 269);
             this.Controls.Add(this.defaultDownloadDirTextBox);
-            this.Controls.Add(this.aboutSoftWare);
             this.Controls.Add(this.setFormSureBtn);
             this.Controls.Add(this.resetSoftwareBtn);
             this.Controls.Add(this.sourceCodeAddressBtn);
@@ -125,7 +116,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.sourceCodeAddressBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.resetSoftwareBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.setFormSureBtn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.aboutSoftWare)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -137,7 +127,6 @@
         private System.Windows.Forms.PictureBox sourceCodeAddressBtn;
         private System.Windows.Forms.PictureBox resetSoftwareBtn;
         private System.Windows.Forms.PictureBox setFormSureBtn;
-        private System.Windows.Forms.PictureBox aboutSoftWare;
         private System.Windows.Forms.TextBox defaultDownloadDirTextBox;
     }
 }

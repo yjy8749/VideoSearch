@@ -66,6 +66,7 @@
     <Compile Include="service\SearchService.cs" />
     <Compile Include="service\DownloadService.cs" />
     <Compile Include="service\XMLService.cs" />
+    <Compile Include="utils\ComboBoxItem.cs" />
     <Compile Include="utils\StringSimilarity.cs" />
     <Compile Include="utils\Constant.cs" />
     <Compile Include="formList\DownLoadForm.cs">

@@ -20,5 +20,6 @@ namespace VideoSearch
         public static readonly string DOWNLOAD_MOVIE_SUCCESS = "视频下载完成";
         public static readonly string SERVICE_IP_NOT_RIGHT = @"网址不合法，必须类似:http://210.45.193.47/";
         public static readonly string SAVE_CONFIG_FILE_FAILED = @"保存配置信息出错，请以管理员身份运行";
+        public static readonly string RESET_SOFTWARE_SUCCESS = "软件已还原到初始状态";
     }
 }

@@ -38,14 +38,14 @@ namespace VideoSearch
         }
         private void analyze()
         {
-            string content = HttpFileModel.load(Constant.SERVICE_ADDRESS + "/return.asp?info=" + code).content;
+            string content = HttpFileModel.load(Constant.SERVICE_ADDRESS + "return.asp?info=" + code).content;
             if (content != null)
             {
                 XmlDocument xmlDoc = new XmlDocument();
                 try
                 {
                     xmlDoc.LoadXml(content);
-                    this.url = Regex.Replace(xmlDoc.SelectSingleNode("root/url").InnerText, Constant.IS_USE_HTTPS ? "https://(.*?)/" : "http://(.*?)/", Constant.SERVICE_ADDRESS+"/");
+                    this.url = Regex.Replace(xmlDoc.SelectSingleNode("root/url").InnerText, Constant.IS_USE_HTTPS ? "https://(.*?)/" : "http://(.*?)/", Constant.SERVICE_ADDRESS);
                     if (this.url.Equals(""))
                     {
                         this.url = MsgString.THIS_MOVIE_NOT_EXIST;

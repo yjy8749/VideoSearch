@@ -24,7 +24,7 @@ namespace VideoSearch
         public Message analyze()
         {
             Message msg = new Message();
-            this.url = Constant.SERVICE_ADDRESS + "/mov/" + code + "/url.xml";
+            this.url = Constant.SERVICE_ADDRESS + "mov/" + code + "/url.xml";
             string content=HttpFileModel.load(this.url).content;
             if (content == null)
             {

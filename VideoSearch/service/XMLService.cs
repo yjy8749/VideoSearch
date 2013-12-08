@@ -57,9 +57,26 @@ namespace VideoSearch
             configXml.save();
             return true;
         }
-        public static bool initConfig()
+        public static Hashtable updateServerList()
         {
-            return true;
+            File.Delete(Constant.SERVET_LIST_FILE_PATH);
+            return XMLService.initServerList();
+        }
+        public static Hashtable initServerList()
+        {
+            if (!File.Exists(Constant.SERVET_LIST_FILE_PATH))
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(HttpFileModel.load(Constant.SERVER_LIST_FILE_URL,"UTF-8").content);
+                xmlDoc.Save(Constant.SERVET_LIST_FILE_PATH);
+            }
+            XmlNodeList serverList = new XmlFileModel(Constant.SERVET_LIST_FILE_PATH).getNodes("server");
+            Hashtable table = new Hashtable();
+            foreach (XmlNode server in serverList)
+            {
+                table.Add(server.SelectSingleNode("name").InnerText, server.SelectSingleNode("url").InnerText);
+            }
+            return table;
         }
     }
 }
