@@ -70,6 +70,7 @@
     <Compile Include="service\DownloadService.cs" />
     <Compile Include="service\XMLService.cs" />
     <Compile Include="utils\ComboBoxItem.cs" />
+    <Compile Include="utils\FileCheck.cs" />
     <Compile Include="utils\StringSimilarity.cs" />
     <Compile Include="utils\Constant.cs" />
     <Compile Include="formList\DownLoadForm.cs">
@@ -133,7 +134,9 @@
       <DependentUpon>ScheduleListView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="app.manifest" />
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
