@@ -16,11 +16,12 @@ namespace VideoSearch
             for (int i = 0; i < nodelist.Count; i++)
             {
                 similarity=StringSimilarity.compare(nodelist[i].SelectSingleNode("a").InnerText,keyValue);
-                if (nodelist[i].SelectSingleNode("c").InnerText.IndexOf(keyValue) != -1 ||
+                if (nodelist[i].SelectSingleNode("a").InnerText.IndexOf(keyValue) != -1 ||
+                    nodelist[i].SelectSingleNode("c").InnerText.IndexOf(keyValue) != -1 ||
                     nodelist[i].SelectSingleNode("d").InnerText.IndexOf(keyValue) != -1 ||
                     nodelist[i].SelectSingleNode("g").InnerText.IndexOf(keyValue) != -1)
                 {
-                    similarity = 1;
+                    similarity = similarity+1;
                 }
                 if (similarity >= 0.3)
                 {

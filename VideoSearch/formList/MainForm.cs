@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -65,7 +66,7 @@ namespace VideoSearch
         {
             if (e.KeyCode == Keys.Enter) this.goBtn_Click(sender, e);
         }
-        private void analyzeKeyValue(object keyValue)
+        public void analyzeKeyValue(object keyValue)
         {
             Message msg = AnalyzeService.analyzeKeyValue((string)keyValue);
             if (msg.isSucceed)
@@ -73,6 +74,13 @@ namespace VideoSearch
                 this.list.add(msg.movieCataList);
                 this.showDataInRecordList(msg.movieCataList);
                 this.setRunState(msg.msg);
+                while (true)
+                {
+                    if (Movie.isAllComplete()) break;
+                    Thread.Sleep(1000);
+                    this.refreshRecordList();
+                }
+                this.setRunState(MsgString.ALL_MOVIE_ADDRESS_ANALYZE_COMPELTE);
             }
             else
             {
@@ -150,8 +158,8 @@ namespace VideoSearch
         }
 
         //Start depute area
-        private delegate void SETRUNSTATE(string str);
-        private void setRunState(string str)
+        public delegate void SETRUNSTATE(string str);
+        public void setRunState(string str)
         {
             if (this.runStateLabel.InvokeRequired)
             {
@@ -251,7 +259,7 @@ namespace VideoSearch
         //End depute area
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.setRunState("初始化软件");
+            new Thread(XMLService.checkVersion).Start();
         }
         //right button menue
         private void analyzeMovieCata_Click(object sender, EventArgs e)
@@ -320,6 +328,11 @@ namespace VideoSearch
         }
         private void addDownloadQueue(short decryptModel)
         {
+            if (this.recordList.SelectedItems[0].SubItems[1].Text.Equals("正在解析地址")
+                || this.recordList.SelectedItems[0].SubItems[1].Text.Equals(MsgString.THIS_MOVIE_NOT_EXIST))
+            {
+                return;
+            }
             if (Constant.folderBrowserDialog.ShowDialog() != DialogResult.OK)
             {
                 return;
@@ -351,5 +364,38 @@ namespace VideoSearch
             }
         }
 
+        private void showInWebView_Click(object sender, EventArgs e)
+        {
+            this.showExploreModelBtn_Click(sender, e);
+            Constant.exploreForm.navigate(Constant.SERVICE_ADDRESS + "bofangye.html?info=" + this.list.getNow()[this.recordList.SelectedItems[0].Index].code);
+        }
+
+        public delegate string SELECTPATH();
+        public string selectPath()
+        {
+            if (this.keyValue.InvokeRequired)
+            {
+                SELECTPATH set = new SELECTPATH(selectPath);
+                return (string)this.Invoke(set, new object[] { });
+            }
+            else
+            {
+                if (Constant.folderBrowserDialog.ShowDialog() != DialogResult.OK)
+                {
+                    return "";
+                }
+                return Constant.folderBrowserDialog.SelectedPath;
+            }
+        }
+
+        private void fighting_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBoxButtons messButton = MessageBoxButtons.OKCancel;
+            DialogResult dr = MessageBox.Show("如果你愿意继续支持我们的工作\r\n请转账到支付宝账号：ahnujyyang@gmail.com,\r\n谢谢你的支持", "继续加油", messButton);
+            if (dr == DialogResult.OK)
+            {
+                Process.Start("https://shenghuo.alipay.com/send/payment/fill.htm?_tosheet=true&_pdType=afcabecbafgggffdhjch");
+            }
+        }
     }
 }

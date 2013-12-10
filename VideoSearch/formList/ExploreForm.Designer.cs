@@ -74,6 +74,7 @@
             this.urlText.Name = "urlText";
             this.urlText.Size = new System.Drawing.Size(521, 21);
             this.urlText.TabIndex = 3;
+            this.urlText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.urlText_KeyDown);
             // 
             // downloadBtn
             // 
@@ -116,6 +117,7 @@
             this.ClientSize = new System.Drawing.Size(676, 415);
             this.Controls.Add(this.webView);
             this.Controls.Add(this.panel1);
+            this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ExploreForm";
             this.Text = "网页浏览模式";

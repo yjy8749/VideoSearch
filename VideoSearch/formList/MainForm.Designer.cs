@@ -48,8 +48,6 @@
             this.showOnlineHelpBtn = new System.Windows.Forms.PictureBox();
             this.shareServiceBtn = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.netStateLabel = new System.Windows.Forms.Label();
             this.runStateLabel = new System.Windows.Forms.Label();
             this.movieCataMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.analyzeMovieCata = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,9 +55,10 @@
             this.movieMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.downloadAutoModel = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadForciblyModel = new System.Windows.Forms.ToolStripMenuItem();
+            this.justDownload = new System.Windows.Forms.ToolStripMenuItem();
             this.copyDownloadUrl = new System.Windows.Forms.ToolStripMenuItem();
             this.selectedOther = new System.Windows.Forms.ToolStripMenuItem();
-            this.justDownload = new System.Windows.Forms.ToolStripMenuItem();
+            this.fighting = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.forwardBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.backBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.goBtn)).BeginInit();
@@ -246,28 +245,6 @@
             this.label1.TabIndex = 13;
             this.label1.Text = "软件状态:";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label2.Location = new System.Drawing.Point(449, 115);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(59, 12);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "网络状态:";
-            // 
-            // netStateLabel
-            // 
-            this.netStateLabel.AutoSize = true;
-            this.netStateLabel.BackColor = System.Drawing.Color.Transparent;
-            this.netStateLabel.ForeColor = System.Drawing.Color.Black;
-            this.netStateLabel.Location = new System.Drawing.Point(506, 115);
-            this.netStateLabel.Name = "netStateLabel";
-            this.netStateLabel.Size = new System.Drawing.Size(101, 12);
-            this.netStateLabel.TabIndex = 15;
-            this.netStateLabel.Text = "软件已可正常使用";
-            // 
             // runStateLabel
             // 
             this.runStateLabel.AutoSize = true;
@@ -298,6 +275,7 @@
             this.showInWebView.Name = "showInWebView";
             this.showInWebView.Size = new System.Drawing.Size(160, 22);
             this.showInWebView.Text = "在浏览器中查看";
+            this.showInWebView.Click += new System.EventHandler(this.showInWebView_Click);
             // 
             // movieMenu
             // 
@@ -308,7 +286,7 @@
             this.copyDownloadUrl,
             this.selectedOther});
             this.movieMenu.Name = "movieMenu";
-            this.movieMenu.Size = new System.Drawing.Size(213, 136);
+            this.movieMenu.Size = new System.Drawing.Size(213, 114);
             // 
             // downloadAutoModel
             // 
@@ -324,6 +302,13 @@
             this.downloadForciblyModel.Text = "下载所选视频(强制解密)";
             this.downloadForciblyModel.Click += new System.EventHandler(this.downloadForciblyModel_Click);
             // 
+            // justDownload
+            // 
+            this.justDownload.Name = "justDownload";
+            this.justDownload.Size = new System.Drawing.Size(212, 22);
+            this.justDownload.Text = "下载所选视频(直接下载)";
+            this.justDownload.Click += new System.EventHandler(this.justDownload_Click);
+            // 
             // copyDownloadUrl
             // 
             this.copyDownloadUrl.Name = "copyDownloadUrl";
@@ -338,12 +323,19 @@
             this.selectedOther.Text = "全选/反选";
             this.selectedOther.Click += new System.EventHandler(this.selectedOther_Click);
             // 
-            // justDownload
+            // fighting
             // 
-            this.justDownload.Name = "justDownload";
-            this.justDownload.Size = new System.Drawing.Size(212, 22);
-            this.justDownload.Text = "下载所选视频(直接下载)";
-            this.justDownload.Click += new System.EventHandler(this.justDownload_Click);
+            this.fighting.AutoSize = true;
+            this.fighting.BackColor = System.Drawing.Color.Transparent;
+            this.fighting.ForeColor = System.Drawing.Color.White;
+            this.fighting.LinkColor = System.Drawing.Color.White;
+            this.fighting.Location = new System.Drawing.Point(619, 457);
+            this.fighting.Name = "fighting";
+            this.fighting.Size = new System.Drawing.Size(53, 12);
+            this.fighting.TabIndex = 17;
+            this.fighting.TabStop = true;
+            this.fighting.Text = "支持我们";
+            this.fighting.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.fighting_LinkClicked);
             // 
             // MainForm
             // 
@@ -351,9 +343,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(800, 518);
+            this.Controls.Add(this.fighting);
             this.Controls.Add(this.runStateLabel);
-            this.Controls.Add(this.netStateLabel);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.shareServiceBtn);
             this.Controls.Add(this.showOnlineHelpBtn);
@@ -407,8 +398,6 @@
         private System.Windows.Forms.PictureBox showOnlineHelpBtn;
         private System.Windows.Forms.PictureBox shareServiceBtn;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label netStateLabel;
         private System.Windows.Forms.Label runStateLabel;
         private System.Windows.Forms.ColumnHeader sourceName;
         private System.Windows.Forms.ColumnHeader addressAndInfo;
@@ -421,6 +410,7 @@
         private System.Windows.Forms.ToolStripMenuItem copyDownloadUrl;
         private System.Windows.Forms.ToolStripMenuItem selectedOther;
         private System.Windows.Forms.ToolStripMenuItem justDownload;
+        private System.Windows.Forms.LinkLabel fighting;
     }
 }
 

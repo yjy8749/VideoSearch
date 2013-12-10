@@ -8,6 +8,7 @@ namespace VideoSearch
 {
     class Constant
     {
+        public static readonly string VERSION = "2.1.0";
         public static readonly string ONLINE_HELP_URL = "http://www.baidu.com";
         public static readonly string PUT_SERVER_INFO_URL = "http://www.baidu.com";
         public static readonly string HOW_TO_GET_MY_SCHOOL_SERVER = "http://www.baidu.com";
@@ -18,6 +19,8 @@ namespace VideoSearch
         public static readonly string TOTAL_FILE_PATH = "search_info.ahnu";
         public static readonly string CONFIG_FILE_PATH = "config.ahnu";
         public static readonly string SERVER_LIST_FILE_URL = "http://127.0.0.1:8000/server_list.ahnu";
+        public static readonly string VERSION_FILE_URL = "http://127.0.0.1:8000/version.ahnu";
+        public static readonly string UPDATE_FILE_URL = "http://127.0.0.1:8000/ahnu_download.zip";
         public static readonly string SERVET_LIST_FILE_PATH = "server_list.ahnu";
         public static readonly string SERVIC_CHECK_REGEX = @"http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?/";
         public static readonly string TODAY_DATE = DateTime.Now.ToString("yyyyMMdd");

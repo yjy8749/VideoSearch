@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace VideoSearch
@@ -85,6 +88,30 @@ namespace VideoSearch
                 XmlFileModel config = new XmlFileModel(Constant.CONFIG_FILE_PATH);
                 Constant.SERVICE_ADDRESS = config.getNode("serviceIp").InnerText;
                 Constant.DEFAULT_DOWNLOAD_DIR = config.getNode("defaultDir").InnerText;
+            }
+        }
+        public static void checkVersion()
+        {
+            Thread.Sleep(1000);
+            HttpFileModel versionFile = HttpFileModel.load(Constant.VERSION_FILE_URL);
+            if (versionFile.content == null || versionFile.content.Equals(""))
+            {
+                return;
+            }
+            XmlDocument xdoc = new XmlDocument();
+            xdoc.LoadXml(versionFile.content);
+            if (Constant.VERSION.CompareTo(xdoc.SelectSingleNode("root/version").InnerText)<0)
+            {
+                MessageBoxButtons messButton = MessageBoxButtons.OKCancel;
+                DialogResult dr = MessageBox.Show("检查到有最新版本可供下载，是否下载？\r\n" + xdoc.SelectSingleNode("root/msg").InnerText, "有新版本", messButton);
+                if (dr == DialogResult.OK)
+                {
+                    MainForm.getInterface().setRunState("正在下载新版本…………");
+                    string path = MainForm.getInterface().selectPath();
+                    DownloadService.downLoadFileAndSave(Constant.UPDATE_FILE_URL,path+"/ahnu_download.zip");
+                    MainForm.getInterface().setRunState("下载完成，请运行新版本");
+                    Process.Start(path + "/ahnu_download.zip");
+                }
             }
         }
     }
