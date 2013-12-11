@@ -59,6 +59,7 @@
             this.copyDownloadUrl = new System.Windows.Forms.ToolStripMenuItem();
             this.selectedOther = new System.Windows.Forms.ToolStripMenuItem();
             this.fighting = new System.Windows.Forms.LinkLabel();
+            this.reportBug = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.forwardBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.backBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.goBtn)).BeginInit();
@@ -329,7 +330,7 @@
             this.fighting.BackColor = System.Drawing.Color.Transparent;
             this.fighting.ForeColor = System.Drawing.Color.White;
             this.fighting.LinkColor = System.Drawing.Color.White;
-            this.fighting.Location = new System.Drawing.Point(619, 457);
+            this.fighting.Location = new System.Drawing.Point(631, 448);
             this.fighting.Name = "fighting";
             this.fighting.Size = new System.Drawing.Size(53, 12);
             this.fighting.TabIndex = 17;
@@ -337,12 +338,27 @@
             this.fighting.Text = "支持我们";
             this.fighting.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.fighting_LinkClicked);
             // 
+            // reportBug
+            // 
+            this.reportBug.AutoSize = true;
+            this.reportBug.BackColor = System.Drawing.Color.Transparent;
+            this.reportBug.ForeColor = System.Drawing.Color.White;
+            this.reportBug.LinkColor = System.Drawing.Color.White;
+            this.reportBug.Location = new System.Drawing.Point(697, 448);
+            this.reportBug.Name = "reportBug";
+            this.reportBug.Size = new System.Drawing.Size(47, 12);
+            this.reportBug.TabIndex = 18;
+            this.reportBug.TabStop = true;
+            this.reportBug.Text = "BUG反馈";
+            this.reportBug.Click += new System.EventHandler(this.reportBug_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(800, 518);
+            this.Controls.Add(this.reportBug);
             this.Controls.Add(this.fighting);
             this.Controls.Add(this.runStateLabel);
             this.Controls.Add(this.label1);
@@ -411,6 +427,7 @@
         private System.Windows.Forms.ToolStripMenuItem selectedOther;
         private System.Windows.Forms.ToolStripMenuItem justDownload;
         private System.Windows.Forms.LinkLabel fighting;
+        private System.Windows.Forms.LinkLabel reportBug;
     }
 }
 

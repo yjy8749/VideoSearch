@@ -21,6 +21,7 @@ namespace VideoSearch
             if (Constant.setForm != null) Constant.setForm.Dispose();
             if (Constant.exploreForm != null) Constant.exploreForm.Dispose();
             if (Constant.downloadForm != null) Constant.downloadForm.Dispose();
+            if (Constant.shareForm != null) Constant.shareForm.Dispose();
         }
         private MainForm()
         {
@@ -149,12 +150,17 @@ namespace VideoSearch
 
         private void showOnlineHelpBtn_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(Constant.ONLINE_HELP_URL);
+            Process.Start(Constant.ONLINE_HELP_URL);
         }
 
         private void showAboutUsBtn_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Constant.ABOUT_US_MSG);
+            if (Constant.shareForm == null)
+            {
+                Constant.shareForm = ShareForm.getInterface();
+            }
+            Constant.shareForm.Show();
+            Constant.shareForm.Focus();
         }
 
         //Start depute area
@@ -396,6 +402,11 @@ namespace VideoSearch
             {
                 Process.Start("https://shenghuo.alipay.com/send/payment/fill.htm?_tosheet=true&_pdType=afcabecbafgggffdhjch");
             }
+        }
+
+        private void reportBug_Click(object sender, EventArgs e)
+        {
+            Process.Start(Constant.REPORT_BUG_OR_SUGGEST_URL);
         }
     }
 }

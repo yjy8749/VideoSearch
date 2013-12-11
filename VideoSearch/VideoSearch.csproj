@@ -35,9 +35,7 @@
   <PropertyGroup>
     <ApplicationIcon>ico2.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
@@ -73,6 +71,12 @@
     </Compile>
     <Compile Include="formList\AboutSoftWareForm.Designer.cs">
       <DependentUpon>AboutSoftWareForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="formList\ShareForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formList\ShareForm.Designer.cs">
+      <DependentUpon>ShareForm.cs</DependentUpon>
     </Compile>
     <Compile Include="model\HttpThreadFile.cs" />
     <Compile Include="model\HttpThreadFileModel.cs" />
@@ -138,6 +142,9 @@
     <EmbeddedResource Include="formList\SetForm.resx">
       <DependentUpon>SetForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="formList\ShareForm.resx">
+      <DependentUpon>ShareForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -152,9 +159,7 @@
       <DependentUpon>ScheduleListView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="app.manifest">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

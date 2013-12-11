@@ -36,6 +36,7 @@ namespace VideoSearch
                 Constant.SERVICE_ADDRESS = serviceIp;
                 Constant.DEFAULT_DOWNLOAD_DIR = this.defaultDownloadDirTextBox.Text;
                 MessageBox.Show("配置成功");
+                SetForm.servetList = null;
                 this.Hide();
             }else{
                 MessageBox.Show(MsgString.SERVICE_IP_NOT_RIGHT);
@@ -48,13 +49,15 @@ namespace VideoSearch
             if (servetList == null)
             { 
                 servetList = XMLService.initServerList();
+                this.serviceAddressCombo.Items.Clear();
+                this.serviceAddressCombo.Items.Add(new ComboBoxItem(Constant.SERVICE_ADDRESS, Constant.SERVICE_ADDRESS));
                 foreach (string key in servetList.Keys)
                 {
                     this.serviceAddressCombo.Items.Add(new ComboBoxItem(key,(string)servetList[key]));
                 }
-                this.serviceAddressCombo.Items.Add(new ComboBoxItem("--更新服务器列表","0"));
-                this.serviceAddressCombo.Items.Add(new ComboBoxItem("--报告新的服务器地址", "1"));
-                this.serviceAddressCombo.Items.Add(new ComboBoxItem("--没有我的学校", "2"));
+                this.serviceAddressCombo.Items.Add(new ComboBoxItem("==更新服务器列表", "0"));
+                this.serviceAddressCombo.Items.Add(new ComboBoxItem("==报告新的服务器地址", "1"));
+                this.serviceAddressCombo.Items.Add(new ComboBoxItem("==没有我的学校", "2"));
             }
         }
 
@@ -78,7 +81,7 @@ namespace VideoSearch
                     }
                 case "1":
                     {
-                        System.Diagnostics.Process.Start(Constant.ONLINE_HELP_URL);
+                        System.Diagnostics.Process.Start(Constant.REPORT_BUG_OR_SUGGEST_URL);
                         break;
                     }
                 case "2":
