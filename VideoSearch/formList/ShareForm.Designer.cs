@@ -78,6 +78,7 @@
             this.startService.Size = new System.Drawing.Size(82, 22);
             this.startService.TabIndex = 3;
             this.startService.Text = "    启动    ";
+            this.startService.Click += new System.EventHandler(this.startService_Click);
             // 
             // stopServiceLabel
             // 

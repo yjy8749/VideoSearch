@@ -24,12 +24,12 @@ namespace VideoSearch
                 Thread th = new Thread(new ThreadStart(StartListen));
                 th.Start();
                 msg.isSucceed = true;
-                msg.msg ("启动成功，开始监听9999端口");
+                msg.msg ="启动成功，开始监听9999端口";
             }
             catch (Exception e)
             {
                 msg.isSucceed = false;
-                msg.msg ("启动失败，请确认本机9999端口未被占用");
+                msg.msg ="启动失败，请确认本机9999端口未被占用";
             }
             return msg;
         }
@@ -93,7 +93,7 @@ namespace VideoSearch
                         sRequestedFile = Path.DirectorySeparatorChar + WebConstant.WEB_INDEX_FILE_PATH;
                     }
 
-                    String sMimeType ("text/html");
+                    String sMimeType="text/html";
                     sPhysicalFilePath = sLocalDir + sRequestedFile;
                     if (File.Exists(sPhysicalFilePath) == false)
                     {   
@@ -108,7 +108,7 @@ namespace VideoSearch
                     else
                     {
                         int iTotBytes = 0;
-                        sResponse ("");
+                        sResponse="";
                         FileStream fs = new FileStream(sPhysicalFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
                         BinaryReader reader = new BinaryReader(fs);
                         byte[] bytes = new byte[fs.Length];

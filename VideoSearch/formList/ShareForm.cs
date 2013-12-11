@@ -39,6 +39,11 @@ namespace VideoSearch
                 this.sourceDirText.Text = this.sourceDirText.Text +"|"+ Constant.folderBrowserDialog.SelectedPath;
             }
         }
+
+        private void startService_Click(object sender, EventArgs e)
+        {
+            new WebService().start();
+        }
        
     }
 }
