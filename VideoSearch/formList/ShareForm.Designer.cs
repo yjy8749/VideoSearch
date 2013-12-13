@@ -35,6 +35,7 @@
             this.startService = new System.Windows.Forms.Label();
             this.stopServiceLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.stateLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // sourceDirText
@@ -103,12 +104,23 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "*多个资源目录和ip请已 | 分割";
             // 
+            // stateLabel
+            // 
+            this.stateLabel.AutoSize = true;
+            this.stateLabel.BackColor = System.Drawing.Color.Transparent;
+            this.stateLabel.ForeColor = System.Drawing.Color.Black;
+            this.stateLabel.Location = new System.Drawing.Point(12, 82);
+            this.stateLabel.Name = "stateLabel";
+            this.stateLabel.Size = new System.Drawing.Size(0, 12);
+            this.stateLabel.TabIndex = 6;
+            // 
             // ShareForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(451, 261);
+            this.Controls.Add(this.stateLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.stopServiceLabel);
             this.Controls.Add(this.startService);
@@ -133,5 +145,6 @@
         private System.Windows.Forms.Label startService;
         private System.Windows.Forms.Label stopServiceLabel;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label stateLabel;
     }
 }

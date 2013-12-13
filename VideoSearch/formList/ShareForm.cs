@@ -42,7 +42,12 @@ namespace VideoSearch
 
         private void startService_Click(object sender, EventArgs e)
         {
-            new WebService().start();
+            if (WebConstant.webService == null)
+            {
+                WebConstant.webService = new WebService();
+            }
+            Message msg = WebConstant.webService.start();
+            this.stateLabel.Text = msg.msg;
         }
        
     }

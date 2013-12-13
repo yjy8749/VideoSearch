@@ -12,17 +12,19 @@ namespace VideoSearch
     class WebService
     {
 
-        private TcpListener myListener;
+        private TcpListener webListener= null;
+        private Thread listenThread = null;
         private int port = 9999;
         public Message start()
         {
             Message msg = new Message();
             try
             {
-                myListener = new TcpListener(port);
-                myListener.Start();
-                Thread th = new Thread(new ThreadStart(StartListen));
-                th.Start();
+                webListener = new TcpListener(IPAddress.Any, port);
+                webListener.Start();
+                isListen = true;
+                listenThread = new Thread(new ThreadStart(startListen));
+                listenThread.Start();
                 msg.isSucceed = true;
                 msg.msg ="启动成功，开始监听9999端口";
             }
@@ -34,104 +36,109 @@ namespace VideoSearch
             return msg;
         }
 
-
-        public void StartListen()
+        public string stop()
+        {
+            Message msg = new Message();
+            webListener.Stop();
+            isListen = false;
+            listenThread.Abort();
+            return "共享服务已停止";
+        }
+        private bool isListen = true;
+        public void startListen()
         {
 
             int iStartPos = 0;
             String sRequest;
-            String sDirName;
-            String sRequestedFile;
-            String sErrorMessage;
-            String sLocalDir;
-            String sMyWebServerRoot="WEB"; //设置虚拟目录            
-            String sPhysicalFilePath="";
-            String sFormattedMessage="";
-            String sResponse ="";
-            while (true)
+            while (isListen)
             {
-                Socket mySocket = myListener.AcceptSocket();
-                if (mySocket.Connected)
+                Socket acceptSocket = webListener.AcceptSocket();
+                if (acceptSocket.Connected)
                 {
                     Byte[] bReceive = new Byte[1024];
-                    int i = mySocket.Receive(bReceive, bReceive.Length, 0);
-                    string sBuffer = Encoding.ASCII.GetString(bReceive);
-                    if (sBuffer.Substring(0, 3) !="GET")
+                    int i = acceptSocket.Receive(bReceive, bReceive.Length, 0);
+                    string requestInfo = Encoding.ASCII.GetString(bReceive);
+                    if (requestInfo.Substring(0, 3) !="GET")
                     {
-                        mySocket.Close();
-                        return;
+                        //非GET请求
+                        acceptSocket.Close();
+                        continue;
                     }
-                    iStartPos = sBuffer.IndexOf("HTTP", 1);
-                    string sHttpVersion = sBuffer.Substring(iStartPos, 8);
-                    sRequest = sBuffer.Substring(0, iStartPos - 1);
+                    iStartPos = requestInfo.IndexOf("HTTP", 1);
+                    string sHttpVersion = requestInfo.Substring(iStartPos, 8);
+                    sRequest = requestInfo.Substring(0, iStartPos - 1);
                     sRequest.Replace("\\", "/");
 
                     //如果结尾不是文件名也不是以"/"结尾则加"/"
-                    if ((sRequest.IndexOf(".") < 1) && (!sRequest.EndsWith("/")))
-                    {
-                        sRequest = sRequest + "/";
-                    }
-                    //得到请求文件名
-                    iStartPos = sRequest.LastIndexOf("/") + 1;
-                    sRequestedFile = sRequest.Substring(iStartPos);
-                    //得到请求文件目录
-                    sDirName = sRequest.Substring(sRequest.IndexOf("/"), sRequest.LastIndexOf("/") - 3);
-                    //获取虚拟目录物理路径
-                    sLocalDir = sMyWebServerRoot;
-                    if (sLocalDir.Length == 0)
-                    {
-                        //404
-                        StreamReader fileStream = new StreamReader(sMyWebServerRoot + Path.DirectorySeparatorChar + WebConstant.WEB_404_FILE_PATH);
-                        string content = fileStream.ReadToEnd();
-                        SendHeader(sHttpVersion, "", content.Length, " 404 Not Found", ref mySocket);
-                        SendToBrowser(content, ref mySocket);
-                        mySocket.Close();
-                        continue;
-                    }
-                    if (sRequestedFile.Length == 0)
-                    {
-                        sRequestedFile = Path.DirectorySeparatorChar + WebConstant.WEB_INDEX_FILE_PATH;
-                    }
-
-                    String sMimeType="text/html";
-                    sPhysicalFilePath = sLocalDir + sRequestedFile;
-                    if (File.Exists(sPhysicalFilePath) == false)
-                    {   
-                        //404
-                        StreamReader fileStream = new StreamReader(sMyWebServerRoot + Path.DirectorySeparatorChar + WebConstant.WEB_404_FILE_PATH);
-                        string content = fileStream.ReadToEnd();
-                        SendHeader(sHttpVersion, "", content.Length, " 404 Not Found", ref mySocket);
-                        SendToBrowser(content, ref mySocket);
-                        mySocket.Close();
-                        continue;
-                    }
-                    else
-                    {
-                        int iTotBytes = 0;
-                        sResponse="";
-                        FileStream fs = new FileStream(sPhysicalFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-                        BinaryReader reader = new BinaryReader(fs);
-                        byte[] bytes = new byte[fs.Length];
-                        int read;
-                        while ((read = reader.Read(bytes, 0, bytes.Length)) != 0)
-                        {
-                            sResponse = sResponse + Encoding.ASCII.GetString(bytes, 0, read);
-
-                            iTotBytes = iTotBytes + read;
-
-                        }
-                        reader.Close();
-                        fs.Close();
-
-                        SendHeader(sHttpVersion, sMimeType, iTotBytes, " 200 OK", ref mySocket);
-                        SendToBrowser(bytes, ref mySocket);
-                        //mySocket.Send(bytes, bytes.Length,0);
-                    }
-                    mySocket.Close();
+                    
+                    doRequest(sRequest,sHttpVersion, ref acceptSocket);
+                    acceptSocket.Close();
                 }
             }
         }
+        private static String sMyWebServerRoot = "WEB"; //设置虚拟目录  
+        public void doRequest(string sRequest, string sHttpVersion,ref Socket acceptSocket)
+        {
+            String sDirName;
+            String sRequestedFile;
+            String sLocalDir;      
+            String sPhysicalFilePath = "";
+            String sResponse = "";
+            string[] request = sRequest.Split('/');
+            sRequestedFile = request[request.Length-1];
+            //得到请求文件目录
+            sDirName = request[1];
+            //获取虚拟目录物理路径
+            sLocalDir = sMyWebServerRoot;
+            if (sLocalDir.Length == 0)
+            {
+                //404
+                StreamReader fileStream = new StreamReader(sMyWebServerRoot + Path.DirectorySeparatorChar + WebConstant.WEB_404_FILE_PATH);
+                string content = fileStream.ReadToEnd();
+                SendHeader(sHttpVersion, "", content.Length, " 404 Not Found", ref acceptSocket);
+                SendToBrowser(content, ref acceptSocket);
+                acceptSocket.Close();
+            }
 
+            if (sRequestedFile.Length == 0)
+            {
+                sRequestedFile = Path.DirectorySeparatorChar + WebConstant.WEB_INDEX_FILE_PATH;
+            }
+
+            String sMimeType = "text/html";
+            sPhysicalFilePath = sLocalDir + Path.DirectorySeparatorChar + sRequestedFile;
+            if (File.Exists(sPhysicalFilePath) == false)
+            {
+                //404
+                StreamReader fileStream = new StreamReader(sMyWebServerRoot + Path.DirectorySeparatorChar + WebConstant.WEB_404_FILE_PATH);
+                string content = fileStream.ReadToEnd();
+                SendHeader(sHttpVersion, "", content.Length, " 404 Not Found", ref acceptSocket);
+                SendToBrowser(content, ref acceptSocket);
+                acceptSocket.Close();
+            }
+            else
+            {
+                int iTotBytes = 0;
+                sResponse = "";
+                FileStream fs = new FileStream(sPhysicalFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                BinaryReader reader = new BinaryReader(fs);
+                byte[] bytes = new byte[fs.Length];
+                int read;
+                while ((read = reader.Read(bytes, 0, bytes.Length)) != 0)
+                {
+                    sResponse = sResponse + Encoding.ASCII.GetString(bytes, 0, read);
+
+                    iTotBytes = iTotBytes + read;
+
+                }
+                reader.Close();
+                fs.Close();
+
+                SendHeader(sHttpVersion, sMimeType, iTotBytes, " 200 OK", ref acceptSocket);
+                SendToBrowser(bytes, ref acceptSocket);
+                //mySocket.Send(bytes, bytes.Length,0);
+            }
+        }
         public void SendHeader(string sHttpVersion, string sMIMEHeader, int iTotBytes, string sStatusCode, ref Socket mySocket)
         {
 
