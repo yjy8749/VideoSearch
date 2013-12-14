@@ -90,6 +90,17 @@ namespace VideoSearch
             configXml.save();
             return true;
         }
+        public static bool saveShareConfigXMl(Hashtable table)
+        {
+            File.Delete(Constant.SHARE_CONFIG_FILE_PATH);
+            XmlFileModel configXml = new XmlFileModel(Constant.SHARE_CONFIG_FILE_PATH);
+            foreach (string key in table.Keys)
+            {
+                configXml.addNode(key, (string)table[key]);
+            }
+            configXml.save();
+            return true;
+        }
         public static Hashtable updateServerList()
         {
             File.Delete(Constant.SERVET_LIST_FILE_PATH);
@@ -118,6 +129,17 @@ namespace VideoSearch
                 XmlFileModel config = new XmlFileModel(Constant.CONFIG_FILE_PATH);
                 Constant.SERVICE_ADDRESS = config.getNode("serviceIp").InnerText;
                 Constant.DEFAULT_DOWNLOAD_DIR = config.getNode("defaultDir").InnerText;
+                Constant.folderBrowserDialog.SelectedPath = Constant.DEFAULT_DOWNLOAD_DIR;
+            }
+        }
+        public static void initShareConfig()
+        {
+            if (File.Exists(Constant.SHARE_CONFIG_FILE_PATH))
+            {
+                XmlFileModel config = new XmlFileModel(Constant.SHARE_CONFIG_FILE_PATH);
+                WebConstant.SHARE_DIRS_STRING = config.getNode("shareDir").InnerText;
+                WebConstant.SHARE_DIRS = config.getNode("shareDir").InnerText.Split('|');
+                WebConstant.ALLOW_IP_TABLE = config.getNode("allowIp").InnerText;
                 Constant.folderBrowserDialog.SelectedPath = Constant.DEFAULT_DOWNLOAD_DIR;
             }
         }

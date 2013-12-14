@@ -9,4 +9,7 @@ D:\WorkSpace\videosearch\VideoSearch\obj\Release\VideoSearch.Properties.Resource
 D:\WorkSpace\videosearch\VideoSearch\obj\Release\VideoSearch.csproj.GenerateResource.Cache
 D:\WorkSpace\videosearch\VideoSearch\obj\Release\VideoSearch.exe
 D:\WorkSpace\videosearch\VideoSearch\obj\Release\VideoSearch.pdb
-D:\WorkSpace\videosearch\VideoSearch\obj\Release\VideoSearch.csprojResolveAssemblyReference.cache
+D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.AboutSoftWareForm.resources
+D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.ShareForm.resources
+D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.ScheduleListView.resources
+D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.csprojResolveAssemblyReference.cache

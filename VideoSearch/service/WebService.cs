@@ -55,8 +55,12 @@ namespace VideoSearch
             while (isListen)
             {
                 Socket acceptSocket = webListener.AcceptSocket();
-                Thread th = new Thread(doSocket);
-                th.Start((object)acceptSocket);
+                string clienIp=acceptSocket.RemoteEndPoint.ToString();
+                if (WebConstant.ALLOW_IP_TABLE.Equals("")||clienIp.Split(':')[0].IndexOf(WebConstant.ALLOW_IP_TABLE) > 0)
+                {
+                    Thread th = new Thread(doSocket);
+                    th.Start((object)acceptSocket);
+                }
             }
         }
         private void doSocket(object objectSocket)
@@ -87,7 +91,7 @@ namespace VideoSearch
         private static String webServerRoot = "WEB"; //设置虚拟目录  
         public void doRequest(string sRequest, string sHttpVersion,ref Socket acceptSocket)
         {
-            if (sRequest.IndexOf('.') > 0)
+            if (sRequest.IndexOf('.') > 0&&sRequest.IndexOf("play")<0)
             {
                 this.doFileRequest(sRequest, sHttpVersion, ref acceptSocket);
                 return;
@@ -164,7 +168,7 @@ namespace VideoSearch
                             break;
                         }
                         string[] parms = urlInfo[1].Split('&');
-                        this.doPlayRequest(parms, ref acceptSocket);
+                        this.doPlayRequest(parms,sHttpVersion, ref acceptSocket);
                         break;
                     }
             }
@@ -172,9 +176,12 @@ namespace VideoSearch
 
         private void doShareRequest(ref Socket acceptSocket)
         {
-            foreach (string dir in WebConstant.SHARE_DIRS)
+            if (shareFileList.Count == 0)
             {
-                this.getDirFiles(new DirectoryInfo(dir),dir);
+                foreach (string dir in WebConstant.SHARE_DIRS)
+                {
+                    this.getDirFiles(new DirectoryInfo(dir), dir);
+                }
             }
             string str;
             string tmp = "";
@@ -211,11 +218,11 @@ namespace VideoSearch
                 }
             }
         } 
-        private void doPlayRequest(string[] parms, ref Socket acceptSocket)
+        private void doPlayRequest(string[] parms,string httpVersion, ref Socket acceptSocket)
         {
             if (parms.Length > 1)
             {
-                string url=null, model="0";
+                string url=null, model="0",name="text";
                 foreach (string str in parms)
                 {
                     string[] strs = str.Split('=');
@@ -230,7 +237,12 @@ namespace VideoSearch
                                 }
                             case "model":
                                 {
-                                    url = strs[1];
+                                    model = strs[1];
+                                    break;
+                                }
+                            case "name":
+                                {
+                                    name = strs[1];
                                     break;
                                 }
                         }
@@ -238,7 +250,11 @@ namespace VideoSearch
                 }
                 if (url != null)
                 {
-                    new HttpRedirectFile(url, short.Parse(model), ref acceptSocket).startRedirect();
+                    if (url.EndsWith(".mp4") || url.EndsWith(".mkv")) model = "1";
+                    HttpRedirectFile httpfile = new HttpRedirectFile(url, short.Parse(model), ref acceptSocket);
+                    string file_type = url.Substring(url.LastIndexOf('.') + 1);
+                    this.SendHeader(httpVersion, ContentType.get(file_type), httpfile.getLength(), "200", name + "." + file_type, ref acceptSocket);
+                    httpfile.startRedirect();
                 }
             }
         }
@@ -290,8 +306,26 @@ namespace VideoSearch
             {
                 if (parms[0].Equals("keyValue"))
                 {
+                    Message msg;
+                    switch (Uri.UnescapeDataString(parms[1]))
+                    {
+                        case "newResource":
+                            {
+                                msg= AnalyzeService.newResource();
+                                break;
+                            }
+                        case "allResource":
+                            {
+                                msg = AnalyzeService.allResource();
+                                break;
+                            }
+                        default:
+                            {
+                                msg = AnalyzeService.analyzeKeyValue(Uri.UnescapeDataString(parms[1]));
+                                break;
+                            }
+                    }
 
-                    Message msg = AnalyzeService.analyzeKeyValue(Uri.UnescapeDataString(parms[1]));
                     if (msg.isSucceed)
                     {
                         string tmp = "";
@@ -318,7 +352,7 @@ namespace VideoSearch
         {
             string[] urlInfo = file.Split('?');
             file = Uri.UnescapeDataString(urlInfo[0]);
-            file = file.Replace("/", "\\");
+            file = file.Replace("/","\\");
             string sStatusCode = "200";
             if (File.Exists(webServerRoot + file))
             {
@@ -326,16 +360,21 @@ namespace VideoSearch
             }
             else
             {
-                foreach (string str in WebConstant.SHARE_DIRS)
+                sStatusCode = "404";
+                file = webServerRoot + Path.DirectorySeparatorChar + WebConstant.WEB_404_FILE_PATH;
+                if (WebConstant.SHARE_DIRS != null)
                 {
-                    if (File.Exists(str + file))
+                    foreach (string str in WebConstant.SHARE_DIRS)
                     {
-                        sStatusCode = "200";
-                        file = str + file;
-                        break;
+                        if (File.Exists(str + file))
+                        {
+                            sStatusCode = "200";
+                            file = str + file;
+                            break;
+                        }
+                        sStatusCode = "404";
+                        file = webServerRoot + Path.DirectorySeparatorChar + WebConstant.WEB_404_FILE_PATH;
                     }
-                    sStatusCode = "404";
-                    file = webServerRoot + Path.DirectorySeparatorChar + WebConstant.WEB_404_FILE_PATH;
                 }
             }
 
@@ -366,14 +405,29 @@ namespace VideoSearch
                 sMIMEHeader ="text/html"; // 默认 text/html
             }
             sBuffer = sBuffer + sHttpVersion + sStatusCode + "\r\n";
-            sBuffer = sBuffer + "Server: cx1193719-b\r\n";
+            sBuffer = sBuffer + "Server: AHNU-100705066\r\n";
             sBuffer = sBuffer + "Content-Type: " + sMIMEHeader + "\r\n";
             sBuffer = sBuffer + "Accept-Ranges: bytes\r\n";
             sBuffer = sBuffer + "Content-Length: " + iTotBytes + "\r\n\r\n";
             Byte[] bSendData = Encoding.UTF8.GetBytes(sBuffer);
             SendToBrowser(bSendData, ref mySocket);
         }
-
+        public void SendHeader(string sHttpVersion, string sMIMEHeader, long iTotBytes, string sStatusCode,string file, ref Socket mySocket)
+        {
+            String sBuffer = "";
+            if (sMIMEHeader.Length == 0)
+            {
+                sMIMEHeader = "text/html"; // 默认 text/html
+            }
+            sBuffer = sBuffer + sHttpVersion + sStatusCode + "\r\n";
+            sBuffer = sBuffer + "Server: AHNU-100705066\r\n";
+            sBuffer = sBuffer + "Content-Type: " + sMIMEHeader + "\r\n";
+            sBuffer = sBuffer + "Accept-Ranges: bytes\r\n";
+            sBuffer = sBuffer + "Content-Length: " + iTotBytes + "\r\n";
+            sBuffer = sBuffer + "Content-Disposition: attachment;fileName=" + file + "\r\n\r\n";
+            Byte[] bSendData = Encoding.UTF8.GetBytes(sBuffer);
+            SendToBrowser(bSendData, ref mySocket);
+        }
         public void SendToBrowser(String sData, ref Socket mySocket)
         {
             SendToBrowser(Encoding.UTF8.GetBytes(sData), ref mySocket);

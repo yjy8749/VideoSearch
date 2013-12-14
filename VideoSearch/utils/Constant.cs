@@ -19,6 +19,7 @@ namespace VideoSearch
         public static readonly string SERVICE_TOTAL_XML_URL = @"mov/xml/Total.xml";
         public static readonly string TOTAL_FILE_PATH = "search_info.ahnu";
         public static readonly string CONFIG_FILE_PATH = "config.ahnu";
+        public static readonly string SHARE_CONFIG_FILE_PATH = "share_config.ahnu";
         public static readonly string SERVER_LIST_FILE_URL = "http://www.icehoney.me/server_list.ahnu";
         public static readonly string VERSION_FILE_URL = "http://www.icehoney.me/version.ahnu";
         public static readonly string UPDATE_FILE_URL = "http://www.icehoney.me/ahnu_download.zip";
@@ -46,6 +47,7 @@ namespace VideoSearch
         public static readonly FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
         static Constant()
         {
+            folderBrowserDialog.Description = "请选择目录";
             folderBrowserDialog.SelectedPath = DEFAULT_DOWNLOAD_DIR;
         }
     }

@@ -29,7 +29,7 @@ namespace VideoSearch
             XMLService.initConfig();
             Constant.mainForm = this;
         }
-        private static readonly MainForm INTERFACE=new MainForm();
+        private static readonly MainForm INTERFACE= new MainForm();
 
         public static MainForm getInterface()
         {
@@ -354,6 +354,7 @@ namespace VideoSearch
             if (this.recordList.CheckedItems.Count == 0)
             {
                 movie = this.list.getNow()[0].movieList[this.recordList.SelectedItems[0].Index];
+                if(movie.url.EndsWith(".mp4") || movie.url.EndsWith(".mkv")) decryptModel = Constant.FORCIBLY_DECRYPT_MODEL;
                 movie.decryptModel = decryptModel;
                 movie.path = Constant.folderBrowserDialog.SelectedPath;
                 Constant.downloadForm.addQueue(movie);

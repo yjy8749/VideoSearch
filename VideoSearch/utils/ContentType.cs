@@ -150,6 +150,27 @@ namespace VideoSearch
             typeTable.Add("xwd", "image/x-xwindowdump");
             typeTable.Add("xyz", "chemical/x-xyz");
             typeTable.Add("zip", "application/zip");
+            typeTable.Add("rmvb", "application/vnd.rn-realmedia-vbr");
+            typeTable.Add("dv", "video/x-dv");
+            typeTable.Add("flv", "video/x-flv");
+            typeTable.Add("mkv", "video/x-matroska");
+            typeTable.Add("asf", "video/x-ms-asf");
+            typeTable.Add("asx", "video/x-ms-asf");
+            typeTable.Add("IVF", "video/x-ivf");
+            typeTable.Add("m1v", "video/x-mpeg");
+            typeTable.Add("m2v", "video/x-mpeg");
+            typeTable.Add("m4e", "video/mpeg4");
+            typeTable.Add("mp2v", "video/mpeg");
+            typeTable.Add("mp4", "video/mpeg4");
+            typeTable.Add("mpa", "video/x-mpg");
+            typeTable.Add("mps", "video/x-mpeg");
+            typeTable.Add("mpv", "video/mpg");
+            typeTable.Add("mpv2", "video/mpeg");
+            typeTable.Add("rv", "video/vnd.rn-realvideo");
+            typeTable.Add("wm", "video/x-ms-wm");
+            typeTable.Add("wmv", "video/x-ms-wmv");
+            typeTable.Add("wmx", "video/x-ms-wmx");
+            typeTable.Add("wvx", "video/x-ms-wvx");
         }
         public static string get(string key)
         {

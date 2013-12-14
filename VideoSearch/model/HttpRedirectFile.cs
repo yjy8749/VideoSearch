@@ -22,6 +22,14 @@ namespace VideoSearch
             this.model = model;
             this.acceptSocket = acceptSocket;
         }
+        public long getLength()
+        {
+            request = (HttpWebRequest)HttpWebRequest.Create(this.url);
+            request.UserAgent = Constant.DOWNLOAD_USER_AGENT;
+            long length = request.GetResponse().ContentLength;
+            request.Abort();
+            return length;
+        }
         public void startRedirect()//开始转发
         {
 
@@ -52,8 +60,14 @@ namespace VideoSearch
             }
             while (read > 0)
             {
-                acceptSocket.Send(buff, buff.Length, 0);
-                read = ns.Read(buff, 0, buff.Length);
+                try
+                {
+                    acceptSocket.Send(buff, buff.Length, 0);
+                    read = ns.Read(buff, 0, buff.Length);
+                }
+                catch
+                {
+                }               
             }
             ns.Close();
 

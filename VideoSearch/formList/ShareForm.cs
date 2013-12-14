@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,6 +18,9 @@ namespace VideoSearch
         private ShareForm()
         {
             InitializeComponent();
+            XMLService.initShareConfig();
+            this.sourceDirText.Text = WebConstant.SHARE_DIRS_STRING;
+            this.allowIpText.Text = WebConstant.ALLOW_IP_TABLE;
         }
         public static ShareForm getInterface()
         {
@@ -39,11 +43,11 @@ namespace VideoSearch
             {
                 this.sourceDirText.Text = this.sourceDirText.Text +"|"+ Constant.folderBrowserDialog.SelectedPath;
             }
+            isNeedUpdateConfig = true;
         }
-
+        private bool isNeedUpdateConfig = false;
         private void startService_Click(object sender, EventArgs e)
         {
-            WebConstant.SHARE_DIRS = this.sourceDirText.Text.Split('|');
             if (WebConstant.webService == null)
             {
                 WebConstant.webService = new WebService();
@@ -65,6 +69,7 @@ namespace VideoSearch
                 WebConstant.LOCAL_URL = myip;
                 Process.Start("http://" + myip + ":9999");
             }
+            this.saveShareConfig();
         }
 
         private void stopServiceLabel_Click(object sender, EventArgs e)
@@ -79,8 +84,18 @@ namespace VideoSearch
 
         private void allowIpText_TextChanged(object sender, EventArgs e)
         {
-
+            isNeedUpdateConfig = true;
         }
-       
+        private void saveShareConfig()
+        {
+            if (!isNeedUpdateConfig) return;
+            Hashtable configTable = new Hashtable();
+            configTable.Add("shareDir", this.sourceDirText.Text);
+            configTable.Add("allowIp", this.allowIpText.Text);
+            XMLService.saveShareConfigXMl(configTable);
+            WebConstant.SHARE_DIRS = this.sourceDirText.Text.Split('|');
+            WebConstant.ALLOW_IP_TABLE = this.allowIpText.Text;
+            isNeedUpdateConfig = false;
+        }
     }
 }
