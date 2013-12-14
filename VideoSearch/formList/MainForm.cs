@@ -272,9 +272,12 @@ namespace VideoSearch
         {
             if (this.recordList.ContextMenuStrip == this.movieCataMenu)
             {
-                this.setRunState(MsgString.NOW_IS_DOING_WORK.Replace("%name%", this.recordList.SelectedItems[0].Text));
-                Thread th = new Thread(anlyzeMovieCata);
-                th.Start((object)this.recordList.SelectedItems[0].Index);
+                if (this.recordList.SelectedItems.Count > 0)
+                {
+                    this.setRunState(MsgString.NOW_IS_DOING_WORK.Replace("%name%", this.recordList.SelectedItems[0].Text));
+                    Thread th = new Thread(anlyzeMovieCata);
+                    th.Start((object)this.recordList.SelectedItems[0].Index);
+                }
             }
         }
         private void anlyzeMovieCata(object o)
@@ -316,8 +319,11 @@ namespace VideoSearch
 
         private void copyDownloadUrl_Click(object sender, EventArgs e)
         {
-            Clipboard.SetDataObject(this.recordList.SelectedItems[0].SubItems[1].Text);
-            this.setRunState(MsgString.COPY_DOWNLOAD_URL_SUCCESS);
+            if (this.recordList.SelectedItems.Count > 0)
+            {
+                Clipboard.SetDataObject(this.recordList.SelectedItems[0].SubItems[1].Text);
+                this.setRunState(MsgString.COPY_DOWNLOAD_URL_SUCCESS);
+            }
         }
 
         private void downloadForciblyModel_Click(object sender, EventArgs e)
@@ -334,6 +340,7 @@ namespace VideoSearch
         }
         private void addDownloadQueue(short decryptModel)
         {
+            if (this.recordList.SelectedItems.Count <= 0) return;
             if (this.recordList.SelectedItems[0].SubItems[1].Text.Equals("正在解析地址")
                 || this.recordList.SelectedItems[0].SubItems[1].Text.Equals(MsgString.THIS_MOVIE_NOT_EXIST))
             {
@@ -373,8 +380,11 @@ namespace VideoSearch
 
         private void showInWebView_Click(object sender, EventArgs e)
         {
-            this.showExploreModelBtn_Click(sender, e);
-            Constant.exploreForm.navigate(Constant.SERVICE_ADDRESS + "bofangye.html?info=" + this.list.getNow()[this.recordList.SelectedItems[0].Index].code);
+            if (this.recordList.SelectedItems.Count > 0)
+            {
+                this.showExploreModelBtn_Click(sender, e);
+                Constant.exploreForm.navigate(Constant.SERVICE_ADDRESS + "bofangye.html?info=" + this.list.getNow()[this.recordList.SelectedItems[0].Index].code);
+            }
         }
 
         public delegate string SELECTPATH();
