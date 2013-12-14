@@ -32,7 +32,7 @@ namespace VideoSearch
                     XmlDocument xmlDoc = new XmlDocument();
                     xmlDoc.LoadXml(file.content);
                     xmlDoc.Save(filePath);
-                    File.Delete(Constant.YESTERDAY_DATE + Constant.TOTAL_FILE_PATH);
+                    XMLService.deleteLastFile(Constant.TOTAL_FILE_PATH);
                     if (Constant.totalInfo == null)
                     {
                         Constant.totalInfo = new XmlFileModel(filePath,xmlDoc);
@@ -41,14 +41,44 @@ namespace VideoSearch
                 {
                     if (Constant.totalInfo == null)
                     {
-                        Constant.totalInfo = new XmlFileModel(Constant.YESTERDAY_DATE + Constant.TOTAL_FILE_PATH);
-                        File.Delete(Constant.YESTERDAY_DATE + Constant.TOTAL_FILE_PATH);
+                        Constant.totalInfo = new XmlFileModel(XMLService.getLastFile(Constant.TOTAL_FILE_PATH));
+                        XMLService.deleteLastFile(Constant.TOTAL_FILE_PATH);
                     }
                 }
             }
             return Constant.totalInfo;
         }
-
+        public static void deleteLastFile(string subName)
+        {
+            DirectoryInfo fdir = new DirectoryInfo(System.Environment.CurrentDirectory);
+            FileInfo[] files = fdir.GetFiles();
+            if (files.Length != 0)
+            {
+                foreach (FileInfo f in files)
+                {
+                    if (f.Name.IndexOf(subName) > 0&&f.Name.IndexOf(Constant.TODAY_DATE)<0)
+                    {
+                        f.Delete();
+                    }
+                }
+            }
+        }
+        public static string getLastFile(string subName)
+        {
+            DirectoryInfo fdir = new DirectoryInfo(System.Environment.CurrentDirectory);
+            FileInfo[] files = fdir.GetFiles();
+            if (files.Length != 0)
+            {
+                foreach (FileInfo f in files)
+                {
+                    if (f.Name.IndexOf(subName) > 0)
+                    {
+                        return f.Name;
+                    }
+                }
+            }
+            return Constant.YESTERDAY_DATE+Constant.TOTAL_FILE_PATH;
+        }
         public static bool saveConfigXMl(Hashtable table)
         {
             File.Delete(Constant.CONFIG_FILE_PATH);

@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
@@ -42,12 +43,43 @@ namespace VideoSearch
 
         private void startService_Click(object sender, EventArgs e)
         {
+            WebConstant.SHARE_DIRS = this.sourceDirText.Text.Split('|');
             if (WebConstant.webService == null)
             {
                 WebConstant.webService = new WebService();
             }
             Message msg = WebConstant.webService.start();
             this.stateLabel.Text = msg.msg;
+            IPHostEntry IpEntry = Dns.GetHostEntry(Dns.GetHostName());
+            string myip = null;
+            foreach (IPAddress ip in IpEntry.AddressList)
+            {
+                if (ip.ToString().Length <= 15)
+                {
+                    myip = ip.ToString();
+                    break;
+                }
+            }
+            if (myip != null)
+            {
+                WebConstant.LOCAL_URL = myip;
+                Process.Start("http://" + myip + ":9999");
+            }
+        }
+
+        private void stopServiceLabel_Click(object sender, EventArgs e)
+        {
+            this.stateLabel.Text = "正在停止服务………………";
+            if (WebConstant.webService != null)
+            {
+                this.stateLabel.Text = WebConstant.webService.stop();
+                WebConstant.webService = null;
+            }
+        }
+
+        private void allowIpText_TextChanged(object sender, EventArgs e)
+        {
+
         }
        
     }

@@ -54,6 +54,7 @@
             this.allowIpText.Name = "allowIpText";
             this.allowIpText.Size = new System.Drawing.Size(314, 21);
             this.allowIpText.TabIndex = 1;
+            this.allowIpText.TextChanged += new System.EventHandler(this.allowIpText_TextChanged);
             // 
             // explanationLabel
             // 
@@ -92,6 +93,7 @@
             this.stopServiceLabel.Size = new System.Drawing.Size(82, 22);
             this.stopServiceLabel.TabIndex = 4;
             this.stopServiceLabel.Text = "    停止    ";
+            this.stopServiceLabel.Click += new System.EventHandler(this.stopServiceLabel_Click);
             // 
             // label1
             // 

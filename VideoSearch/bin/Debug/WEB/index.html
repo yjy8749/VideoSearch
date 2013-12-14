@@ -17,6 +17,7 @@
 				margin: auto;
 				width: 80%;
 				max-width: 800px;
+				text-align: center;
 			}
 			form{
 				padding: 0.6em;
@@ -54,20 +55,31 @@
 				border: 2px solid #fff;
 				display: block;
 			}
+			a{
+				color: white;
+				padding: 0 5px;
+				text-decoration: none;
+				display: inline-block;
+			}
+			a:hover{
+				color: yellow;
+			}
 		</style>
 	</head>
 	<body>
 		<header class="space">
-			<img src="http://qr.liantu.com/api.php?bg=33898c&fg=ffffff&text=127.0.0.1:9999">
+			<img src="http://qr.liantu.com/api.php?bg=33898c&fg=ffffff&text={url}">
 			<h1>AHNU 视频下载器>共享服务入口(可扫二维码进入)</h1>
 			<h4>看到这个页面代表，服务已正确启动，若其他设备无法访问该网址，请关闭防火墙再试</h4>
 		</header>
 		<div class="space">
-			<form>
+			<form action="/search" method="get">
 				<input type="text" name="keyValue" class="keyValue" /><input type="submit" class="go" value="GO"/>
 			</form>
+			<a href="/search?keyValue=newResource"><h2>最新资源</h2></a>
+			<a href="/search?keyValue=allResource"><h2>全部资源</h2></a>
+			<a href="/share"><h2>共享目录</h2></a>
 		</div>
 		<div style="clear:both"></div>
 	</body>
 </html>
-

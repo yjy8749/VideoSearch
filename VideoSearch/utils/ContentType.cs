@@ -153,7 +153,11 @@ namespace VideoSearch
         }
         public static string get(string key)
         {
-            return (string)typeTable[key];
+            if (typeTable.Contains(key))
+            {
+                return (string)typeTable[key];
+            }
+            return (string)typeTable["html"];
         }
     }
 }

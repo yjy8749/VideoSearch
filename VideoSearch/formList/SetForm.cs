@@ -26,7 +26,15 @@ namespace VideoSearch
         private void setFormSureBtn_Click(object sender, EventArgs e)
         {
             ComboBoxItem item = (ComboBoxItem)this.serviceAddressCombo.SelectedItem;
-            string serviceIp = item.Value;
+            string serviceIp;
+            if (item == null)
+            {
+                serviceIp = this.serviceAddressCombo.Text;
+            }
+            else
+            {
+                serviceIp = item.Value;
+            }
             if (System.Text.RegularExpressions.Regex.IsMatch(serviceIp,Constant.SERVIC_CHECK_REGEX))
             {
                 Hashtable configTable = new Hashtable();

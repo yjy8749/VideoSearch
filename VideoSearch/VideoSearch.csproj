@@ -78,6 +78,7 @@
     <Compile Include="formList\ShareForm.Designer.cs">
       <DependentUpon>ShareForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="model\HttpRedirectFile.cs" />
     <Compile Include="model\HttpThreadFile.cs" />
     <Compile Include="model\HttpThreadFileModel.cs" />
     <Compile Include="model\Movie.cs" />

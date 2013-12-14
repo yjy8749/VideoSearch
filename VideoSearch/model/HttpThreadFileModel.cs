@@ -61,10 +61,6 @@ namespace VideoSearch
                 request.AddRange(this.httpThreadFile.threadFileStartIndex[this.threadNum], this.httpThreadFile.threadFileStartIndex[this.threadNum] + this.httpThreadFile.threadFileSize[this.threadNum]);
                 ns = request.GetResponse().GetResponseStream();//获得接收流
                 nreadsize = ns.Read(nbytes, 0, 512);
-                if (this.threadNum == 7)
-                {
-                    this.threadNum = 7;
-                }
                 if (this.threadNum == 0)
                 {
                     if (this.decryptModel == Constant.FORCIBLY_DECRYPT_MODEL)
