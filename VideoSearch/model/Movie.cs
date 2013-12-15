@@ -73,6 +73,7 @@ namespace VideoSearch
         public Message download()
         {
             httpThreadFile = new HttpThreadFile(name + this.type, this.url, decryptModel);
+            if(!this.path.EndsWith("\\")) this.path =this.path + Path.DirectorySeparatorChar;
             return httpThreadFile.startDownload(this.path + this.name + this.type);
         }
         public void cancleDownload()
