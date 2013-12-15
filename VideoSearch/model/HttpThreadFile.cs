@@ -24,6 +24,7 @@ namespace VideoSearch
         private short decryptModel;
         private Thread[] threadList;
         private bool cancle = false;
+        private static object locker = new object();
         public HttpThreadFile(string path, string url, short decryptModel)
         {
             this.filePath = path;
@@ -45,6 +46,13 @@ namespace VideoSearch
         {
             double m = DateTime.Now.Subtract(startTime).TotalSeconds;
             return ((this.haveDownSize / m) / 1000000).ToString("0.00")+"M/s";
+        }
+        public void addDownloadSize(long read)
+        {
+            lock (locker)
+            {
+                this.haveDownSize += read;
+            }
         }
         public void stopDownload()
         {
@@ -115,18 +123,21 @@ namespace VideoSearch
         public void mergeFile(string path)
         {
             bool flag = true;
-            while (!flag)//等待
+            while (true)//等待
             {
-                if (this.cancle) return;
                 flag = true;
-                for (int i = 0; i < this.threadCount; i++)
+                for (int i = 0; i < threadCount; i++)
                 {
-                    if (this.threadFlag[i] == false)
+                    if (threadFlag[i] == false)
                     {
                         flag = false;
                         Thread.Sleep(1000);
                         break;
                     }
+                }
+                if (flag == true)//所有线程已结束，停止等待
+                {
+                    break;
                 }
             }
             FileStream fs;//开始合并

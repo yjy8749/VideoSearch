@@ -86,7 +86,7 @@ namespace VideoSearch
                     fs.Write(nbytes, 0, nreadsize);
                     nreadsize = ns.Read(nbytes, 0, 512);
                     //formm.setPBValue(nreadsize);//接收字节数
-                    this.httpThreadFile.haveDownSize += nreadsize;
+                    this.httpThreadFile.addDownloadSize(nreadsize);
                     fs.Flush();
                 }
                 fs.Close();

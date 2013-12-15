@@ -12,4 +12,3 @@ D:\WorkSpace\videosearch\VideoSearch\obj\Release\VideoSearch.pdb
 D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.AboutSoftWareForm.resources
 D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.ShareForm.resources
 D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.ScheduleListView.resources
-D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.csprojResolveAssemblyReference.cache
