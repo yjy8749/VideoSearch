@@ -12,3 +12,4 @@ D:\WorkSpace\VideoSearch\VideoSearch\obj\x64\Release\VideoSearch.ScheduleListVie
 D:\WorkSpace\VideoSearch\VideoSearch\obj\x64\Release\VideoSearch.csproj.GenerateResource.Cache
 D:\WorkSpace\VideoSearch\VideoSearch\obj\x64\Release\VideoSearch.exe
 D:\WorkSpace\VideoSearch\VideoSearch\obj\x64\Release\VideoSearch.pdb
+D:\WorkSpace\VideoSearch\VideoSearch\obj\x64\Release\VideoSearch.csprojResolveAssemblyReference.cache

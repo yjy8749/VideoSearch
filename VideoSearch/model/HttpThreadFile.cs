@@ -40,7 +40,7 @@ namespace VideoSearch
 
         public string getSchedule()
         {
-            return (this.haveDownSize * 100 / this.fileSize).ToString();
+            return (this.haveDownSize / this.fileSize).ToString();
         }
         public string getSpeed()
         {

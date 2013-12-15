@@ -253,7 +253,7 @@ namespace VideoSearch
                     if (url.EndsWith(".mp4") || url.EndsWith(".mkv")) model = "1";
                     HttpRedirectFile httpfile = new HttpRedirectFile(url, short.Parse(model), ref acceptSocket);
                     string file_type = url.Substring(url.LastIndexOf('.') + 1);
-                    this.SendHeader(httpVersion, ContentType.get(file_type), httpfile.getLength(), "200", name + "." + file_type, ref acceptSocket);
+                    this.SendHeader(httpVersion, ContentType.get(file_type), httpfile.getLength(), "200", ref acceptSocket);
                     httpfile.startRedirect();
                 }
             }
@@ -360,22 +360,24 @@ namespace VideoSearch
             }
             else
             {
-                sStatusCode = "404";
-                file = webServerRoot + Path.DirectorySeparatorChar + WebConstant.WEB_404_FILE_PATH;
+                string tmp_sStatusCode = "404";
+                string tmp_file = webServerRoot + Path.DirectorySeparatorChar + WebConstant.WEB_404_FILE_PATH;
                 if (WebConstant.SHARE_DIRS != null)
                 {
                     foreach (string str in WebConstant.SHARE_DIRS)
                     {
                         if (File.Exists(str + file))
                         {
-                            sStatusCode = "200";
-                            file = str + file;
+                            tmp_sStatusCode = "200";
+                            tmp_file = str + file;
                             break;
                         }
-                        sStatusCode = "404";
-                        file = webServerRoot + Path.DirectorySeparatorChar + WebConstant.WEB_404_FILE_PATH;
+                        tmp_sStatusCode = "404";
+                        tmp_file = webServerRoot + Path.DirectorySeparatorChar + WebConstant.WEB_404_FILE_PATH;
                     }
                 }
+                file = tmp_file;
+                sStatusCode = tmp_sStatusCode;
             }
 
             FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read);

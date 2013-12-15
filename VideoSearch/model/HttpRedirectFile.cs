@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 
 namespace VideoSearch
 {
@@ -14,7 +15,7 @@ namespace VideoSearch
         private short model;
         private HttpWebRequest request;
         private System.IO.Stream ns;
-        private byte[] buff = new byte[1024];
+        private byte[] buff = new byte[10240];
         private bool isDecrypted = false;
         public HttpRedirectFile(string url, short model, ref Socket acceptSocket)//构造方法
         {
@@ -33,9 +34,11 @@ namespace VideoSearch
         public void startRedirect()//开始转发
         {
 
+            //request = (HttpWebRequest)HttpWebRequest.Create("http://127.0.0.1:8000/test.mkv");
             request = (HttpWebRequest)HttpWebRequest.Create(this.url);
             request.UserAgent = Constant.DOWNLOAD_USER_AGENT;
-            ns = request.GetResponse().GetResponseStream();//获得接收流
+            WebResponse res = request.GetResponse();
+            ns = res.GetResponseStream();//获得接收流
             int read = ns.Read(buff, 0, buff.Length);
             if (!isDecrypted)
             {
@@ -60,6 +63,7 @@ namespace VideoSearch
             }
             while (read > 0)
             {
+                if (!acceptSocket.Connected) break;
                 try
                 {
                     acceptSocket.Send(buff, buff.Length, 0);
@@ -67,10 +71,10 @@ namespace VideoSearch
                 }
                 catch
                 {
-                }               
+                }
+                Thread.Sleep(10);
             }
             ns.Close();
-
         }
     }
 }
