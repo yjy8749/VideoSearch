@@ -140,6 +140,7 @@ namespace VideoSearch
                 WebConstant.SHARE_DIRS_STRING = config.getNode("shareDir").InnerText;
                 WebConstant.SHARE_DIRS = config.getNode("shareDir").InnerText.Split('|');
                 WebConstant.ALLOW_IP_TABLE = config.getNode("allowIp").InnerText;
+                WebConstant.SHUT_DOWN_PASSWORD = config.getNode("password").InnerText;
                 Constant.folderBrowserDialog.SelectedPath = Constant.DEFAULT_DOWNLOAD_DIR;
             }
         }

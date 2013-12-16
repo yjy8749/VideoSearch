@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading ;
+using System.Diagnostics;
 
 namespace VideoSearch
 {
@@ -171,6 +172,44 @@ namespace VideoSearch
                         this.doPlayRequest(parms,sHttpVersion, ref acceptSocket);
                         break;
                     }
+                case "/shutdown":
+                    {
+                        if (urlInfo.Length < 2)
+                        {
+                            if (WebConstant.error404TmpFile == null)
+                            {
+                                WebConstant.error404TmpFile = this.readToEnd(webServerRoot + Path.DirectorySeparatorChar + WebConstant.WEB_404_FILE_PATH);
+                            }
+                            this.SendHeader(sHttpVersion, "", WebConstant.error404TmpFile.Length, "404", ref acceptSocket);
+                            this.SendToBrowser(WebConstant.error404TmpFile, ref acceptSocket);
+                            break;
+                        }
+                        string [] parms = urlInfo[1].Split('=');
+                        this.doShutDownRequest(parms, sHttpVersion, ref acceptSocket);
+                        break;
+                    }
+            }
+        }
+
+        private void doShutDownRequest(string[] parms, string sHttpVersion, ref Socket acceptSocket)
+        {
+            if (WebConstant.SHUT_DOWN_PASSWORD.Equals(""))
+            {
+                return;
+            }
+            if (parms.Length > 1)
+            {
+                if (parms[0].Equals("password") && parms[1].Equals(WebConstant.SHUT_DOWN_PASSWORD))
+                {
+                    Process myProcess = new Process();
+                    myProcess.StartInfo.FileName = "cmd.exe";
+                    myProcess.StartInfo.UseShellExecute = false;
+                    myProcess.StartInfo.RedirectStandardInput = true;
+                    myProcess.StartInfo.RedirectStandardOutput = true;
+                    myProcess.StartInfo.RedirectStandardError = true;
+                    myProcess.StartInfo.CreateNoWindow = true; myProcess.Start();
+                    myProcess.StandardInput.WriteLine("shutdown -s -t 60");
+                }
             }
         }
 

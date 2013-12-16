@@ -36,6 +36,7 @@
             this.stopServiceLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.stateLabel = new System.Windows.Forms.Label();
+            this.shutDownPasswordText = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // sourceDirText
@@ -62,7 +63,7 @@
             this.explanationLabel.BackColor = System.Drawing.Color.Transparent;
             this.explanationLabel.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.explanationLabel.ForeColor = System.Drawing.Color.White;
-            this.explanationLabel.Location = new System.Drawing.Point(44, 213);
+            this.explanationLabel.Location = new System.Drawing.Point(44, 250);
             this.explanationLabel.Name = "explanationLabel";
             this.explanationLabel.Size = new System.Drawing.Size(74, 22);
             this.explanationLabel.TabIndex = 2;
@@ -75,7 +76,7 @@
             this.startService.BackColor = System.Drawing.Color.Transparent;
             this.startService.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.startService.ForeColor = System.Drawing.Color.White;
-            this.startService.Location = new System.Drawing.Point(185, 214);
+            this.startService.Location = new System.Drawing.Point(185, 251);
             this.startService.Name = "startService";
             this.startService.Size = new System.Drawing.Size(82, 22);
             this.startService.TabIndex = 3;
@@ -88,7 +89,7 @@
             this.stopServiceLabel.BackColor = System.Drawing.Color.Transparent;
             this.stopServiceLabel.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.stopServiceLabel.ForeColor = System.Drawing.Color.White;
-            this.stopServiceLabel.Location = new System.Drawing.Point(330, 214);
+            this.stopServiceLabel.Location = new System.Drawing.Point(330, 251);
             this.stopServiceLabel.Name = "stopServiceLabel";
             this.stopServiceLabel.Size = new System.Drawing.Size(82, 22);
             this.stopServiceLabel.TabIndex = 4;
@@ -116,12 +117,21 @@
             this.stateLabel.Size = new System.Drawing.Size(0, 12);
             this.stateLabel.TabIndex = 6;
             // 
+            // shutDownPasswordText
+            // 
+            this.shutDownPasswordText.Location = new System.Drawing.Point(121, 188);
+            this.shutDownPasswordText.Name = "shutDownPasswordText";
+            this.shutDownPasswordText.Size = new System.Drawing.Size(314, 21);
+            this.shutDownPasswordText.TabIndex = 7;
+            this.shutDownPasswordText.TextChanged += new System.EventHandler(this.shutDownPasswordText_TextChanged);
+            // 
             // ShareForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(451, 261);
+            this.ClientSize = new System.Drawing.Size(451, 306);
+            this.Controls.Add(this.shutDownPasswordText);
             this.Controls.Add(this.stateLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.stopServiceLabel);
@@ -148,5 +158,6 @@
         private System.Windows.Forms.Label stopServiceLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label stateLabel;
+        private System.Windows.Forms.TextBox shutDownPasswordText;
     }
 }

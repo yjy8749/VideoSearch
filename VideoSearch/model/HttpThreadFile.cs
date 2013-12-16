@@ -23,7 +23,7 @@ namespace VideoSearch
         private DateTime startTime;
         private short decryptModel;
         private Thread[] threadList;
-        private bool cancle = false;
+        private bool allHaveDown = false;
         private static object locker = new object();
         public HttpThreadFile(string path, string url, short decryptModel)
         {
@@ -40,7 +40,15 @@ namespace VideoSearch
 
         public string getSchedule()
         {
-            return (this.haveDownSize / this.fileSize).ToString();
+            if (this.allHaveDown)
+            {
+                return "101";
+            }
+            if (this.isStartMerge)
+            {
+                return "100";
+            }
+            return (Convert.ToDouble(this.haveDownSize) *100 / this.fileSize).ToString();
         }
         public string getSpeed()
         {
@@ -51,7 +59,7 @@ namespace VideoSearch
         {
             lock (locker)
             {
-                this.haveDownSize += read;
+                this.haveDownSize = this.haveDownSize+ read;
             }
         }
         public void stopDownload()
@@ -63,7 +71,7 @@ namespace VideoSearch
                     this.threadList[i].Abort();
                 }
             }
-            this.cancle = true;
+            //this.cancle = true;
         }
 
         public Message startDownload(string path)
@@ -140,6 +148,7 @@ namespace VideoSearch
                     break;
                 }
             }
+            this.isStartMerge = true;
             FileStream fs;//开始合并
             FileStream fstemp;
             int readfile;
@@ -171,6 +180,7 @@ namespace VideoSearch
                 File.Delete(this.tempFileName[k]);
             }
             fs.Close();
+            this.allHaveDown = true;
         }
     }
 }

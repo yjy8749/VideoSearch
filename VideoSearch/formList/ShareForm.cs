@@ -21,6 +21,7 @@ namespace VideoSearch
             XMLService.initShareConfig();
             this.sourceDirText.Text = WebConstant.SHARE_DIRS_STRING;
             this.allowIpText.Text = WebConstant.ALLOW_IP_TABLE;
+            this.shutDownPasswordText.Text = WebConstant.SHUT_DOWN_PASSWORD;
         }
         public static ShareForm getInterface()
         {
@@ -92,10 +93,17 @@ namespace VideoSearch
             Hashtable configTable = new Hashtable();
             configTable.Add("shareDir", this.sourceDirText.Text);
             configTable.Add("allowIp", this.allowIpText.Text);
+            configTable.Add("password", this.shutDownPasswordText.Text);
             XMLService.saveShareConfigXMl(configTable);
             WebConstant.SHARE_DIRS = this.sourceDirText.Text.Split('|');
             WebConstant.ALLOW_IP_TABLE = this.allowIpText.Text;
+            WebConstant.SHUT_DOWN_PASSWORD = this.shutDownPasswordText.Text;
             isNeedUpdateConfig = false;
+        }
+
+        private void shutDownPasswordText_TextChanged(object sender, EventArgs e)
+        {
+            isNeedUpdateConfig = true;
         }
     }
 }

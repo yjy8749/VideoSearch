@@ -16,6 +16,7 @@ namespace VideoSearch
         public static string[] SHARE_DIRS = null;
         public static string SHARE_DIRS_STRING = null;
         public static string ALLOW_IP_TABLE = "";
+        public static string SHUT_DOWN_PASSWORD = "";
         public static string indexTmpFile = null;
         public static string listTmpFile = null;
         public static string viewTmpFIle = null;
