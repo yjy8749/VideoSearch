@@ -10,159 +10,131 @@ namespace VideoSearch
 {
     class HttpThreadFile
     {
-        public string url;
-        public string filePath;
-        public bool[] threadFlag; //每个线程结束标志
-        public string[] tempFileName;//每个线程接收文件的文件名
-        public int[] threadFileStartIndex;//每个线程接收文件的起始位置
-        public int[] threadFileSize;//每个线程接收文件的大小        
-        public bool isStartMerge = false;//文件合并标志
-        public int threadCount;//进程数
-        public long fileSize = 0;
-        public long haveDownSize = 0;        
-        private DateTime startTime;
-        private short decryptModel;
-        private Thread[] threadList;
-        private bool allHaveDown = false;
+        public bool[] threadw; //每个线程结束标志
+        public string[] filenamew;//每个线程接收文件的文件名
+        public int[] filestartw;//每个线程接收文件的起始位置
+        public int[] filesizew;//每个线程接收文件的大小
+        public string strurl;//接受文件的URL
+        public bool hb;//文件合并标志
+        public int thread;//进程数
+        long filesize = 0;
+        public double downsize = 0;
+        public string moviepath;
+        public string temppath = "";
+        DateTime dt;
+        public short decryptModel = Constant.AUTO_DECRYPT_MODEL;
         private static object locker = new object();
         public HttpThreadFile(string path, string url, short decryptModel)
         {
-            this.filePath = path;
+            moviepath = path;
+            strurl = url;
             this.decryptModel = decryptModel;
-            this.url = url;
             HttpWebRequest request;
-            request = (HttpWebRequest)HttpWebRequest.Create(this.url);
+            request = (HttpWebRequest)HttpWebRequest.Create(strurl);
             request.UserAgent = Constant.DOWNLOAD_USER_AGENT;
-            this.fileSize = request.GetResponse().ContentLength;//目标文件长度
+            filesize = request.GetResponse().ContentLength;//目标文件长度
+            downsize = 0;
             request.Abort();
-            this.haveDownSize = 0;
         }
 
         public string getSchedule()
         {
-            if (this.allHaveDown)
-            {
-                return "101";
-            }
-            if (this.isStartMerge)
-            {
-                return "100";
-            }
-            return (Convert.ToDouble(this.haveDownSize) *100 / this.fileSize).ToString();
+            return (downsize / filesize).ToString() + "";
         }
         public string getSpeed()
         {
-            double m = DateTime.Now.Subtract(startTime).TotalSeconds;
-            return ((this.haveDownSize / m) / 1000000).ToString("0.00")+"M/s";
+            DateTime now = new DateTime();
+            double m = DateTime.Now.Subtract(dt).TotalSeconds;
+            return ((downsize / m) / 1000000).ToString("0.00");
         }
         public void addDownloadSize(long read)
         {
             lock (locker)
             {
-                this.haveDownSize = this.haveDownSize+ read;
+                this.downsize += read;
             }
         }
-        public void stopDownload()
-        {
-            for (int i = 0; i < this.threadList.Length; i++)
-            {
-                if (this.threadList[i].ThreadState != ThreadState.Stopped)
-                {
-                    this.threadList[i].Abort();
-                }
-            }
-            //this.cancle = true;
-        }
-
         public Message startDownload(string path)
         {
             Message msg = new Message();
             ServicePointManager.DefaultConnectionLimit = 512;
-            this.startTime = DateTime.Now;//开始接收时间
+            dt = DateTime.Now;//开始接收时间
             try
-            {          
-                this.threadCount = Constant.DOWNLOAD_THREAD_COUNT;//根据线程数初始化数组
-                this.threadFlag = new bool[this.threadCount];
-                this.tempFileName = new string[this.threadCount];
-                this.threadFileStartIndex = new int[this.threadCount];
-                this.threadFileSize = new int[this.threadCount];　//计算每个线程应该接收文件的大小
-                int filethread = (int)this.fileSize / this.threadCount;//平均分配
-                int filethreade = filethread + (int)this.fileSize % this.threadCount;//剩余部分由最后一个线程完成　
+            {
+                thread = 8;//根据线程数初始化数组
+                threadw = new bool[thread];
+                filenamew = new string[thread];
+                filestartw = new int[thread];
+                filesizew = new int[thread];　//计算每个线程应该接收文件的大小
+                int filethread = (int)filesize / thread;//平均分配
+                int filethreade = filethread + (int)filesize % thread;//剩余部分由最后一个线程完成　
                 //为数组赋值
-                for (int i = 0; i < this.threadCount; i++)
+                for (int i = 0; i < thread; i++)
                 {
-                    this.threadFlag[i] = false;//每个线程状态的初始值为假
-                    this.tempFileName[i] = i.ToString() + Constant.FILE_TYPE;//每个线程接收文件的临时文件名
-                    if (i < this.threadCount - 1)
+                    threadw[i] = false;//每个线程状态的初始值为假
+                    filenamew[i] = temppath + i.ToString() + ".ahnu";//每个线程接收文件的临时文件名
+                    if (i < thread - 1)
                     {
-                        this.threadFileStartIndex[i] = filethread * i;//每个线程接收文件的起始点
-                        this.threadFileSize[i] = filethread - 1;//每个线程接收文件的长度
+                        filestartw[i] = filethread * i;//每个线程接收文件的起始点
+                        filesizew[i] = filethread - 1;//每个线程接收文件的长度
                     }
                     else
                     {
-                        this.threadFileStartIndex[i] = filethread * i;
-                        this.threadFileSize[i] = filethreade - 1;
+                        filestartw[i] = filethread * i;
+                        filesizew[i] = filethreade - 1;
                     }
                 }
                 //定义线程数组，启动接收线程
-                threadList = new Thread[this.threadCount];
-                HttpThreadFileModel[] httpThreadFile = new HttpThreadFileModel[this.threadCount];
-                for (int j = 0; j < this.threadCount; j++)
+                Thread[] threadk = new Thread[thread];
+                HttpThreadFileModel[] httpfile = new HttpThreadFileModel[thread];
+                for (int j = 0; j < thread; j++)
                 {
-                    httpThreadFile[j] = new HttpThreadFileModel(this, j,this.decryptModel);
+                    httpfile[j] = new HttpThreadFileModel(this, j,this.decryptModel);
                     //ThreadPool.QueueUserWorkItem(new WaitCallback(httpfile[j].receive),1);
-                    threadList[j] = new Thread(new ThreadStart(httpThreadFile[j].receive));
-                    threadList[j].Start();
+                    threadk[j] = new Thread(new ThreadStart(httpfile[j].receive));
+                    threadk[j].Start();
                 }
                 //启动合并各线程接收的文件的线程
                 this.mergeFile(path);
                 msg.isSucceed = true;
-                msg.msg = MsgString.DOWNLOAD_MOVIE_SUCCESS;
+                msg.msg = "视频下载完成";
                 return msg;
             }
             catch (Exception er)
             {
-                msg.isSucceed = false;
-                msg.msg = er.Message;
-                return msg;
             }
+            msg.isSucceed = true;
+            msg.msg = "视频下载失败";
+            return msg;
         }
 
         public void mergeFile(string path)
         {
-            bool flag = true;
             while (true)//等待
             {
-                flag = true;
-                for (int i = 0; i < threadCount; i++)
+                hb = true;
+                for (int i = 0; i < thread; i++)
                 {
-                    if (threadFlag[i] == false)
+                    if (threadw[i] == false)
                     {
-                        flag = false;
-                        Thread.Sleep(1000);
+                        hb = false;
+                        Thread.Sleep(100);
                         break;
                     }
                 }
-                if (flag == true)//所有线程已结束，停止等待
+                if (hb == true)//所有线程已结束，停止等待
                 {
                     break;
                 }
             }
-            this.isStartMerge = true;
             FileStream fs;//开始合并
             FileStream fstemp;
             int readfile;
             byte[] bytes = new byte[512];
             fs = new FileStream(path, System.IO.FileMode.Create);
-            for (int k = 0; k < this.threadCount; k++)
+            for (int k = 0; k < thread; k++)
             {
-                if (!this.threadFlag[k])
-                {
-                    k--;
-                    Thread.Sleep(100);
-                    continue;
-                }
-                fstemp = new FileStream(this.tempFileName[k], System.IO.FileMode.Open);
+                fstemp = new FileStream(filenamew[k], System.IO.FileMode.Open);
                 while (true)
                 {
                     readfile = fstemp.Read(bytes, 0, 512);
@@ -174,13 +146,11 @@ namespace VideoSearch
                     {
                         break;
                     }
-                    fs.Flush();
                 }
                 fstemp.Close();
-                File.Delete(this.tempFileName[k]);
+                File.Delete(filenamew[k]);
             }
             fs.Close();
-            this.allHaveDown = true;
         }
     }
 }

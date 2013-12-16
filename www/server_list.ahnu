@@ -25,7 +25,7 @@
 	</server>
 	<server>
 		<name>中原工学院</name>
-		<url>http://movie.zzti.edu.cn/</url>
+		<url>http://202.196.33.250/</url>
 	</server>
 	<server>
 		<name>河南工程学院</name>
@@ -90,5 +90,9 @@
 	<server>
 		<name>长江师范学院</name>
 		<url>http://210.41.32.33/</url>
+	</server>
+	<server>
+		<name>石家庄铁道大学</name>
+		<url>http://202.206.32.234/</url>
 	</server>
 </root>

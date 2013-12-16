@@ -10,26 +10,26 @@ namespace VideoSearch
 {
     class HttpThreadFileModel
     {
-        private HttpThreadFile httpThreadFile;
-        private int threadNum;//线程代号　
-        private string tempName;//文件名　
-        private string url;//接收文件的URL　
-        private FileStream fs;
-        private HttpWebRequest request;
-        private System.IO.Stream ns;
-        private byte[] nbytes;//接收缓冲区　
-        private int nreadsize;//接收字节数
+        public HttpThreadFile formm;
+        public int threadh;//线程代号　
+        public string filename;//文件名　
+        public string strUrl;//接收文件的URL　
+        public FileStream fs;
+        public HttpWebRequest request;
+        public System.IO.Stream ns;
+        public byte[] nbytes;//接收缓冲区　
+        public int nreadsize;//接收字节数
         private short decryptModel;
-        public HttpThreadFileModel(HttpThreadFile htf, int threadNum,short decryptModel)//构造方法
+        public HttpThreadFileModel(HttpThreadFile htf, int thread, short decryptModel)//构造方法
         {
-            this.httpThreadFile = htf;
-            this.threadNum = threadNum;
+            formm = htf;
+            threadh = thread;
             this.decryptModel = decryptModel;
         }
         public void receive()//接收线程
         {
-            this.tempName = this.httpThreadFile.tempFileName[this.threadNum];
-            this.url = this.httpThreadFile.url;
+            filename = formm.filenamew[threadh];
+            strUrl = formm.strurl;
             ns = null;
             nbytes = new byte[512];
             nreadsize = 0;
@@ -38,14 +38,7 @@ namespace VideoSearch
             {
                 try
                 {
-                    if (File.Exists(this.tempName))
-                    {
-                        fs = new FileStream(this.tempName, System.IO.FileMode.Open);
-                    }
-                    else
-                    {
-                        fs = new FileStream(this.tempName, System.IO.FileMode.Create);
-                    }
+                    fs = new FileStream(filename, System.IO.FileMode.Create);
                     break;
                 }
                 catch
@@ -55,13 +48,15 @@ namespace VideoSearch
             }
             try
             {
-                request = (HttpWebRequest)HttpWebRequest.Create(this.url);
+                request = (HttpWebRequest)HttpWebRequest.Create(strUrl);
                 request.UserAgent = Constant.DOWNLOAD_USER_AGENT;
+                request.Timeout = 1000000;
                 //接收的起始位置及接收的长度
-                request.AddRange(this.httpThreadFile.threadFileStartIndex[this.threadNum], this.httpThreadFile.threadFileStartIndex[this.threadNum] + this.httpThreadFile.threadFileSize[this.threadNum]);
+                request.AddRange(formm.filestartw[threadh], formm.filestartw[threadh] + formm.filesizew[threadh]);
                 ns = request.GetResponse().GetResponseStream();//获得接收流
                 nreadsize = ns.Read(nbytes, 0, 512);
-                if (this.threadNum == 0)
+                formm.addDownloadSize(nreadsize);
+                if (this.threadh == 0)
                 {
                     if (this.decryptModel == Constant.FORCIBLY_DECRYPT_MODEL)
                     {
@@ -83,11 +78,10 @@ namespace VideoSearch
                 }
                 while (nreadsize > 0)
                 {
-                    this.httpThreadFile.addDownloadSize(nreadsize);
                     fs.Write(nbytes, 0, nreadsize);
                     nreadsize = ns.Read(nbytes, 0, 512);
                     //formm.setPBValue(nreadsize);//接收字节数
-                    fs.Flush();
+                    formm.addDownloadSize(nreadsize);
                 }
                 fs.Close();
                 ns.Close();
@@ -96,7 +90,7 @@ namespace VideoSearch
             {
                 fs.Close();
             }
-            this.httpThreadFile.threadFlag[this.threadNum] = true;
-        }
+            formm.threadw[threadh] = true;
+        }            
     }
 }

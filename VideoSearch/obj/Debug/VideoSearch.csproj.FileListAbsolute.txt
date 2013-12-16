@@ -12,4 +12,3 @@ D:\WorkSpace\VideoSearch\VideoSearch\obj\Debug\VideoSearch.ScheduleListView.reso
 D:\WorkSpace\VideoSearch\VideoSearch\obj\Debug\VideoSearch.csproj.GenerateResource.Cache
 D:\WorkSpace\VideoSearch\VideoSearch\obj\Debug\VideoSearch.exe
 D:\WorkSpace\VideoSearch\VideoSearch\obj\Debug\VideoSearch.pdb
-D:\WorkSpace\VideoSearch\VideoSearch\obj\Debug\VideoSearch.csprojResolveAssemblyReference.cache

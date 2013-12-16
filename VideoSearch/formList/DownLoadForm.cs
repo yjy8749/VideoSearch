@@ -72,13 +72,9 @@ namespace VideoSearch
                 if (!this.queueList[nowQueueIndex].cancle)
                 {
                     sch = this.queueList[nowQueueIndex].getShcedule();
-                    this.updateListviewItem(nowQueueIndex, 1, sch);
-                    this.updateListviewItem(nowQueueIndex, 2, this.queueList[nowQueueIndex].getSpeed());
-                    if (sch.Equals("101"))
-                    {
-                        this.updateListviewItem(nowQueueIndex, 3, "下载完成");
-                    }
-                    if (sch.Equals("100"))
+                    this.updateListviewItem(nowQueueIndex, 1, sch.Equals("1")?"100.00":sch);
+                    this.updateListviewItem(nowQueueIndex, 2, this.queueList[nowQueueIndex].getSpeed()+" M/s");
+                    if (sch.Equals("1"))
                     {
                         this.updateListviewItem(nowQueueIndex, 3, "合并缓存");
                     }

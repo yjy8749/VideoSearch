@@ -78,35 +78,16 @@ namespace VideoSearch
         }
         public void cancleDownload()
         {
-            if (httpThreadFile != null)
-            {
-                if (httpThreadFile.isStartMerge) return;
-                httpThreadFile.stopDownload();
-            }
-            this.httpThreadFile = null;
-            while (true)
-            {
-                try
-                {
-                    File.Delete(this.path + this.name + this.type);
-                }
-                catch
-                {
-                    Thread.Sleep(1000);
-                    continue;
-                }
-                break;
-            }
-            this.cancle = true;
+            
         }
         public string getShcedule()
         {
-            if(this.httpThreadFile==null) return "0";
+            if(this.httpThreadFile==null) return "0.00";
             return this.httpThreadFile.getSchedule();
         }
         public string getSpeed()
         {
-            if (this.httpThreadFile == null) return "0";
+            if (this.httpThreadFile == null) return "0.00";
             return this.httpThreadFile.getSpeed();
         }
         public static bool isAllComplete()
