@@ -13,10 +13,6 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
             //base.Dispose(disposing);
             base.Hide();
         }
@@ -34,12 +30,12 @@
             this.downloadMenue = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openFile = new System.Windows.Forms.ToolStripMenuItem();
             this.openDir = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopDownload = new System.Windows.Forms.ToolStripMenuItem();
             this.scheduleListView = new VideoSearch.ScheduleListView();
             this.nameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.scheduleColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.speedColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.stateColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.stopDownload = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadMenue.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,21 +46,28 @@
             this.openDir,
             this.stopDownload});
             this.downloadMenue.Name = "downloadMenue";
-            this.downloadMenue.Size = new System.Drawing.Size(153, 92);
+            this.downloadMenue.Size = new System.Drawing.Size(149, 70);
             // 
             // openFile
             // 
             this.openFile.Name = "openFile";
-            this.openFile.Size = new System.Drawing.Size(152, 22);
+            this.openFile.Size = new System.Drawing.Size(148, 22);
             this.openFile.Text = "打开文件";
             this.openFile.Click += new System.EventHandler(this.openFile_Click);
             // 
             // openDir
             // 
             this.openDir.Name = "openDir";
-            this.openDir.Size = new System.Drawing.Size(152, 22);
+            this.openDir.Size = new System.Drawing.Size(148, 22);
             this.openDir.Text = "打开文件目录";
             this.openDir.Click += new System.EventHandler(this.openDir_Click);
+            // 
+            // stopDownload
+            // 
+            this.stopDownload.Name = "stopDownload";
+            this.stopDownload.Size = new System.Drawing.Size(148, 22);
+            this.stopDownload.Text = "取消任务";
+            this.stopDownload.Click += new System.EventHandler(this.stopDownload_Click);
             // 
             // scheduleListView
             // 
@@ -112,13 +115,6 @@
             this.stateColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.stateColumn.Width = 80;
             // 
-            // stopDownload
-            // 
-            this.stopDownload.Name = "stopDownload";
-            this.stopDownload.Size = new System.Drawing.Size(152, 22);
-            this.stopDownload.Text = "取消任务";
-            this.stopDownload.Click += new System.EventHandler(this.stopDownload_Click);
-            // 
             // DownLoadForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -146,6 +142,5 @@
         private System.Windows.Forms.ToolStripMenuItem openFile;
         private System.Windows.Forms.ToolStripMenuItem openDir;
         private System.Windows.Forms.ToolStripMenuItem stopDownload;
-
     }
 }

@@ -21,6 +21,7 @@ namespace VideoSearch
         public short decryptModel;
         public string path=Constant.DEFAULT_DOWNLOAD_DIR;
         public bool cancle = false;
+        public bool isAbort = false;
         public Movie(string name,string code)
         {
             this.name = name;
@@ -72,14 +73,33 @@ namespace VideoSearch
         }
         public Message download()
         {
+            if (this.isAbort)
+            {
+                Message msg = new Message();
+                msg.isSucceed = true;
+                msg.msg = "下载完成";
+                return msg;
+            }
             httpThreadFile = new HttpThreadFile(name + this.type, this.url, decryptModel);
             if(!this.path.EndsWith("\\")) this.path =this.path + Path.DirectorySeparatorChar;
             return httpThreadFile.startDownload(this.path + this.name + this.type);
         }
         public Message cancleDownload()
         {
-            if (this.httpThreadFile == null) return null;
-            return this.httpThreadFile.stopDownload();
+            this.isAbort = true;
+            Message msg;
+            if (this.httpThreadFile != null)
+            {
+                msg = this.httpThreadFile.stopDownload();
+                this.httpThreadFile = null;
+            }
+            else
+            {
+                msg = new Message();
+                msg.isSucceed = true;
+                msg.msg = "取消下载";
+            }
+            return msg;
         }
         public string getShcedule()
         {

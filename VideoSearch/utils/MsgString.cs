@@ -13,8 +13,8 @@ namespace VideoSearch
         public static readonly string NOW_IS_DOING_WORK = "正在处理《%name%》......";
         public static readonly string ADD_DOWNLOAD_QUEUE = "添加下载任务《%name%》......";
         public static readonly string ANALYZE_SUCCESS = "解析成功，共%num%条数据";
-        public static readonly string ANALYZE_URL_FILE_FAILED = "解析失败，亲检查网络连接";
-        public static readonly string ANALYZE_XML_FILE_FAILED = "解析失败，亲检查配置网址";
+        public static readonly string ANALYZE_URL_FILE_FAILED = "解析失败，请检查网络连接";
+        public static readonly string ANALYZE_XML_FILE_FAILED = "解析失败，请检查配置网址";
         public static readonly string COPY_DOWNLOAD_URL_SUCCESS = "下载地址复制成功";
         public static readonly string ALL_MOVIE_ADDRESS_ANALYZE_COMPELTE = "全部视频地址解析完成";
         public static readonly string DOWNLOAD_MOVIE_SUCCESS = "视频下载完成";

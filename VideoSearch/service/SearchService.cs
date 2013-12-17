@@ -10,16 +10,17 @@ namespace VideoSearch
     {
         public static List<MovieCata> searchMovieCatas(string keyValue)
         {
+            keyValue = keyValue.ToLower();
             List<MovieCata> list = new List<MovieCata>();
             XmlNodeList nodelist = XMLService.getTotalInfo().xmldoc.SelectNodes("root/film");
             float similarity;
             for (int i = 0; i < nodelist.Count; i++)
             {
-                similarity=StringSimilarity.compare(nodelist[i].SelectSingleNode("a").InnerText,keyValue);
-                if (nodelist[i].SelectSingleNode("a").InnerText.IndexOf(keyValue) != -1 ||
-                    nodelist[i].SelectSingleNode("c").InnerText.IndexOf(keyValue) != -1 ||
-                    nodelist[i].SelectSingleNode("d").InnerText.IndexOf(keyValue) != -1 ||
-                    nodelist[i].SelectSingleNode("g").InnerText.IndexOf(keyValue) != -1)
+                similarity = StringSimilarity.compare(nodelist[i].SelectSingleNode("a").InnerText.ToLower(), keyValue);
+                if (nodelist[i].SelectSingleNode("a").InnerText.ToLower().IndexOf(keyValue) != -1 ||
+                    nodelist[i].SelectSingleNode("c").InnerText.ToLower().IndexOf(keyValue) != -1 ||
+                    nodelist[i].SelectSingleNode("d").InnerText.ToLower().IndexOf(keyValue) != -1 ||
+                    nodelist[i].SelectSingleNode("g").InnerText.ToLower().IndexOf(keyValue) != -1)
                 {
                     similarity = similarity+1;
                 }

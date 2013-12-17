@@ -310,12 +310,12 @@ namespace VideoSearch
 
         private void selectedOther_Click(object sender, EventArgs e)
         {
+            foreach (ListViewItem item in this.recordList.Items)
+            {
+                item.Checked = !item.Checked;
+            }
             if (this.recordList.SelectedItems.Count > 0)
             {
-                foreach (ListViewItem item in this.recordList.Items)
-                {
-                    item.Checked = !item.Checked;
-                }
                 this.recordList.SelectedItems[0].Checked = true;
             }
         }

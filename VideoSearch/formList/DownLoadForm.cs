@@ -62,8 +62,6 @@ namespace VideoSearch
             string sch;
             while (this.isDownloading)
             {
-                if (!this.queueList[nowQueueIndex].cancle)
-                {
                     sch = this.queueList[nowQueueIndex].getShcedule();
                     this.updateListviewItem(nowQueueIndex, 1, sch.Equals("1")?"100.00":sch);
                     this.updateListviewItem(nowQueueIndex, 2, this.queueList[nowQueueIndex].getSpeed()+" M/s");
@@ -72,7 +70,6 @@ namespace VideoSearch
                         this.updateListviewItem(nowQueueIndex, 3, "合并缓存");
                     }
                     Thread.Sleep(100);
-                }
             }
         }
         private delegate void UPDATELISTVIEWITEM(int index,int columns,string value);
@@ -93,8 +90,10 @@ namespace VideoSearch
         {
             if (this.scheduleListView.SelectedItems.Count > 0)
             {
-                if (this.scheduleListView.SelectedItems[0].SubItems[3].Text.IndexOf("取消") >-1) return;
-                Process.Start(this.queueList[this.scheduleListView.SelectedItems[0].Index].reallyPath());
+                if (this.scheduleListView.SelectedItems[0].SubItems[3].Text.IndexOf("完成") > -1)
+                {
+                    Process.Start(this.queueList[this.scheduleListView.SelectedItems[0].Index].reallyPath());
+                }
             }
         }
 
@@ -102,10 +101,12 @@ namespace VideoSearch
         {
             if (this.scheduleListView.SelectedItems.Count > 0)
             {
-                if (this.scheduleListView.SelectedItems[0].SubItems[3].Text.IndexOf("取消") > -1) return;
-                System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo("Explorer.exe");
-                psi.Arguments = "/e,/select," + this.queueList[this.scheduleListView.SelectedItems[0].Index].reallyPath();
-                System.Diagnostics.Process.Start(psi);
+                if (this.scheduleListView.SelectedItems[0].SubItems[3].Text.IndexOf("完成")>-1)
+                {
+                    System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo("Explorer.exe");
+                    psi.Arguments = "/e,/select," + this.queueList[this.scheduleListView.SelectedItems[0].Index].reallyPath();
+                    System.Diagnostics.Process.Start(psi);
+                }
             }
         }
 
@@ -114,12 +115,10 @@ namespace VideoSearch
             if (this.scheduleListView.SelectedItems.Count > 0)
             {
                 Message msg = this.queueList[this.scheduleListView.SelectedItems[0].Index].cancleDownload();
-                if (msg!=null&&!msg.isSucceed)
-                {
-                    MessageBox.Show(msg.msg);
-                }
+                this.updateListviewItem(nowQueueIndex, 3, msg.msg);
             }
         }
+
         //private void button1_Click(object sender, EventArgs e)
         //{
         //    Message msg = new HttpThreadFile("shdbz01.mkv", "http://127.0.0.1:8000/生活大爆炸第六季(24集全) 第01集.mkv", Constant.FORCIBLY_DECRYPT_MODEL).startDownload();

@@ -16,11 +16,7 @@ namespace VideoSearch
         private ExploreForm()
         {
             InitializeComponent();
-            this.webView.Document.Window.Error += new HtmlElementErrorEventHandler(documentError);
             this.navigate(Constant.SERVICE_ADDRESS + "2010index.html");
-        }
-        public void documentError(object sender, HtmlElementErrorEventArgs e)
-        {
         }
         private static readonly ExploreForm INTERFACE = new ExploreForm();
         public static ExploreForm getInterface()
