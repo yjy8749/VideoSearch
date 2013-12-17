@@ -78,6 +78,7 @@ namespace VideoSearch
         }
         public Message cancleDownload()
         {
+            if (this.httpThreadFile == null) return null;
             return this.httpThreadFile.stopDownload();
         }
         public string getShcedule()

@@ -93,6 +93,7 @@ namespace VideoSearch
         {
             if (this.scheduleListView.SelectedItems.Count > 0)
             {
+                if (this.scheduleListView.SelectedItems[0].SubItems[3].Text.IndexOf("取消") >-1) return;
                 Process.Start(this.queueList[this.scheduleListView.SelectedItems[0].Index].reallyPath());
             }
         }
@@ -101,6 +102,7 @@ namespace VideoSearch
         {
             if (this.scheduleListView.SelectedItems.Count > 0)
             {
+                if (this.scheduleListView.SelectedItems[0].SubItems[3].Text.IndexOf("取消") > -1) return;
                 System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo("Explorer.exe");
                 psi.Arguments = "/e,/select," + this.queueList[this.scheduleListView.SelectedItems[0].Index].reallyPath();
                 System.Diagnostics.Process.Start(psi);
@@ -112,7 +114,7 @@ namespace VideoSearch
             if (this.scheduleListView.SelectedItems.Count > 0)
             {
                 Message msg = this.queueList[this.scheduleListView.SelectedItems[0].Index].cancleDownload();
-                if (!msg.isSucceed)
+                if (msg!=null&&!msg.isSucceed)
                 {
                     MessageBox.Show(msg.msg);
                 }
