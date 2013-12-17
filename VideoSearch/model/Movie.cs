@@ -76,9 +76,9 @@ namespace VideoSearch
             if(!this.path.EndsWith("\\")) this.path =this.path + Path.DirectorySeparatorChar;
             return httpThreadFile.startDownload(this.path + this.name + this.type);
         }
-        public void cancleDownload()
+        public Message cancleDownload()
         {
-            
+            return this.httpThreadFile.stopDownload();
         }
         public string getShcedule()
         {

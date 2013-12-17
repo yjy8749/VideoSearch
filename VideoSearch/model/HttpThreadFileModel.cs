@@ -20,6 +20,7 @@ namespace VideoSearch
         public byte[] nbytes;//接收缓冲区　
         public int nreadsize;//接收字节数
         private short decryptModel;
+        public bool isAbort = false;
         public HttpThreadFileModel(HttpThreadFile htf, int thread, short decryptModel)//构造方法
         {
             formm = htf;
@@ -78,6 +79,11 @@ namespace VideoSearch
                 }
                 while (nreadsize > 0)
                 {
+                    if (this.isAbort)
+                    {
+                        this.request.Abort();
+                        break;
+                    }
                     fs.Write(nbytes, 0, nreadsize);
                     nreadsize = ns.Read(nbytes, 0, 512);
                     //formm.setPBValue(nreadsize);//接收字节数

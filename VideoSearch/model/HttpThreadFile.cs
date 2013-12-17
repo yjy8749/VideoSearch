@@ -24,6 +24,9 @@ namespace VideoSearch
         DateTime dt;
         public short decryptModel = Constant.AUTO_DECRYPT_MODEL;
         private static object locker = new object();
+        private Thread[] threadk = new Thread[Constant.DOWNLOAD_THREAD_COUNT];
+        private bool isAbort = false;
+        private HttpThreadFileModel[] httpfile = new HttpThreadFileModel[Constant.DOWNLOAD_THREAD_COUNT];
         public HttpThreadFile(string path, string url, short decryptModel)
         {
             moviepath = path;
@@ -54,14 +57,57 @@ namespace VideoSearch
                 this.downsize += read;
             }
         }
+        public Message stopDownload()
+        {
+            Message msg = new Message();
+            if (this.isAbort)
+            {
+                msg.isSucceed = true;
+                msg.msg = "任务已取消";
+                return msg;
+            }
+            bool startHb = false;
+            startHb = true;
+            for (int i = 0; i < thread; i++)
+            {
+                if (threadw[i] == false)
+                {
+                    startHb = false;
+                    break;
+                }
+            }
+            if (startHb)
+            {
+                msg.isSucceed = false;
+                msg.msg = "文件已全部下载完成，正在合并，请不要取消";
+            }
+            else
+            {
+                this.isAbort = true;
+                for (int i = 0; i < threadk.Length; i++)
+                {
+                    if (threadw[i] == false)
+                    {
+                        httpfile[i].isAbort = true;
+                        Thread.Sleep(10);
+                        threadk[i].Abort();
+                        threadw[i] = true;
+                    }
+                }
+                msg.isSucceed = true;
+                msg.msg = "任务已取消";
+            }
+            return msg;
+        }
         public Message startDownload(string path)
         {
             Message msg = new Message();
+            downsize = 0;
             ServicePointManager.DefaultConnectionLimit = 512;
             dt = DateTime.Now;//开始接收时间
             try
             {
-                thread = 8;//根据线程数初始化数组
+                thread = Constant.DOWNLOAD_THREAD_COUNT;//根据线程数初始化数组
                 threadw = new bool[thread];
                 filenamew = new string[thread];
                 filestartw = new int[thread];
@@ -85,8 +131,7 @@ namespace VideoSearch
                     }
                 }
                 //定义线程数组，启动接收线程
-                Thread[] threadk = new Thread[thread];
-                HttpThreadFileModel[] httpfile = new HttpThreadFileModel[thread];
+                //HttpThreadFileModel[] httpfile = new HttpThreadFileModel[thread];
                 for (int j = 0; j < thread; j++)
                 {
                     httpfile[j] = new HttpThreadFileModel(this, j,this.decryptModel);
@@ -97,14 +142,21 @@ namespace VideoSearch
                 //启动合并各线程接收的文件的线程
                 this.mergeFile(path);
                 msg.isSucceed = true;
-                msg.msg = "视频下载完成";
+                if (this.isAbort)
+                {
+                    msg.msg = "取消下载";
+                }
+                else
+                {
+                    msg.msg = "下载完成";
+                }
                 return msg;
             }
             catch (Exception er)
             {
             }
             msg.isSucceed = true;
-            msg.msg = "视频下载失败";
+            msg.msg = "下载失败";
             return msg;
         }
 
@@ -127,6 +179,7 @@ namespace VideoSearch
                     break;
                 }
             }
+            if (this.isAbort) return;
             FileStream fs;//开始合并
             FileStream fstemp;
             int readfile;

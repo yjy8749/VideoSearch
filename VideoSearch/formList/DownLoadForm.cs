@@ -52,14 +52,7 @@ namespace VideoSearch
             {
                 this.updateListviewItem(nowQueueIndex, 3, "正在下载");
                 msg = this.queueList[nowQueueIndex].download();
-                if (msg.isSucceed)
-                {
-                    this.updateListviewItem(nowQueueIndex, 3, "下载完成");
-                }
-                else
-                {
-                    this.updateListviewItem(nowQueueIndex, 3, msg.msg);
-                }                
+                this.updateListviewItem(nowQueueIndex, 3, msg.msg);
             }
             isDownloading = false;
             this.downloadThread = null;
@@ -104,17 +97,6 @@ namespace VideoSearch
             }
         }
 
-        private void removeThisQueue_Click(object sender, EventArgs e)
-        {
-            //if (this.scheduleListView.SelectedItems.Count > 0)
-            //{
-            //    this.queueList[this.scheduleListView.SelectedItems[0].Index].cancleDownload();
-            //    this.scheduleListView.SelectedItems[0].SubItems[1].Text = 100+"";
-            //    this.scheduleListView.SelectedItems[0].SubItems[2].Text = "0.00 MB/s";
-            //    this.scheduleListView.SelectedItems[0].SubItems[3].Text = MsgString.CANCLE_DOWNLOAD_QUEUE;
-            //}
-        }
-
         private void openDir_Click(object sender, EventArgs e)
         {
             if (this.scheduleListView.SelectedItems.Count > 0)
@@ -122,6 +104,18 @@ namespace VideoSearch
                 System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo("Explorer.exe");
                 psi.Arguments = "/e,/select," + this.queueList[this.scheduleListView.SelectedItems[0].Index].reallyPath();
                 System.Diagnostics.Process.Start(psi);
+            }
+        }
+
+        private void stopDownload_Click(object sender, EventArgs e)
+        {
+            if (this.scheduleListView.SelectedItems.Count > 0)
+            {
+                Message msg = this.queueList[this.scheduleListView.SelectedItems[0].Index].cancleDownload();
+                if (!msg.isSucceed)
+                {
+                    MessageBox.Show(msg.msg);
+                }
             }
         }
         //private void button1_Click(object sender, EventArgs e)

@@ -39,6 +39,7 @@
             this.scheduleColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.speedColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.stateColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.stopDownload = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadMenue.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,9 +47,10 @@
             // 
             this.downloadMenue.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openFile,
-            this.openDir});
+            this.openDir,
+            this.stopDownload});
             this.downloadMenue.Name = "downloadMenue";
-            this.downloadMenue.Size = new System.Drawing.Size(153, 70);
+            this.downloadMenue.Size = new System.Drawing.Size(153, 92);
             // 
             // openFile
             // 
@@ -110,6 +112,13 @@
             this.stateColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.stateColumn.Width = 80;
             // 
+            // stopDownload
+            // 
+            this.stopDownload.Name = "stopDownload";
+            this.stopDownload.Size = new System.Drawing.Size(152, 22);
+            this.stopDownload.Text = "取消任务";
+            this.stopDownload.Click += new System.EventHandler(this.stopDownload_Click);
+            // 
             // DownLoadForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -136,6 +145,7 @@
         private System.Windows.Forms.ContextMenuStrip downloadMenue;
         private System.Windows.Forms.ToolStripMenuItem openFile;
         private System.Windows.Forms.ToolStripMenuItem openDir;
+        private System.Windows.Forms.ToolStripMenuItem stopDownload;
 
     }
 }
