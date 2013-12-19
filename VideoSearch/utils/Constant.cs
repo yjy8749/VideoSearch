@@ -8,7 +8,7 @@ namespace VideoSearch
 {
     class Constant
     {
-        public static readonly string VERSION = "2.1.1";
+        public static readonly string VERSION = "2.1.8";
         public static readonly string ONLINE_HELP_URL = "http://www.icehoney.me/help.html";
         public static readonly string SHARE_SERVICE_EXPLAN_URL = "http://www.icehoney.me/explanation.html";
         public static readonly string PUT_SERVER_INFO_URL = "https://docs.google.com/forms/d/1eJlE4LS-K4_DGuLe9ZYaClwCKe6_Px6YvwR_AKlQ_jE/viewform";
