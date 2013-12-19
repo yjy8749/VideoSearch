@@ -54,16 +54,22 @@ namespace VideoSearch
 
         private void webView_Navigated(object sender, WebBrowserNavigatedEventArgs e)
         {
-            if (!this.webView.Url.OriginalString.StartsWith(Constant.SERVICE_ADDRESS))
+            if (!this.webView.Url.OriginalString.StartsWith(Constant.SERVICE_ADDRESS)&&!this.keyDown)
             {
                 this.urlText.Text = Regex.Replace(this.webView.Url.OriginalString, Constant.IS_USE_HTTPS ? "https://(.*?)/" : "http://(.*?)/", Constant.SERVICE_ADDRESS);
                 this.webView.Navigate(this.urlText.Text);
+                this.keyDown = false;
             }
+            this.urlText.Text = this.webView.Url.OriginalString;
         }
-
+        private bool keyDown = false;
         private void urlText_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter) this.webView.Navigate(Regex.Replace(this.urlText.Text, Constant.IS_USE_HTTPS ? "https://(.*?)/" : "http://(.*?)/", Constant.SERVICE_ADDRESS));
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.keyDown = true;
+                this.webView.Navigate(this.urlText.Text.StartsWith("http") ? this.urlText.Text : "http://" + this.urlText.Text);
+            }
         }
 
         private delegate void WEBVIEWNAVIGATE(string url);
@@ -77,6 +83,19 @@ namespace VideoSearch
             else
             {
                 this.webView.Navigate(url);
+            }
+        }
+
+        private void webView_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            foreach (HtmlElement archor in this.webView.Document.Links)
+            {
+                archor.SetAttribute("target", "_self");
+            }
+
+            foreach (HtmlElement form in this.webView.Document.Forms)
+            {
+                form.SetAttribute("target", "_self");
             }
         }
 

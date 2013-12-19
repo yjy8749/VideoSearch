@@ -73,13 +73,7 @@ namespace VideoSearch
         }
         public Message download()
         {
-            if (this.isAbort)
-            {
-                Message msg = new Message();
-                msg.isSucceed = true;
-                msg.msg = "下载完成";
-                return msg;
-            }
+            this.isAbort = false;
             httpThreadFile = new HttpThreadFile(name + this.type, this.url, decryptModel);
             if(!this.path.EndsWith("\\")) this.path =this.path + Path.DirectorySeparatorChar;
             return httpThreadFile.startDownload(this.path + this.name + this.type);

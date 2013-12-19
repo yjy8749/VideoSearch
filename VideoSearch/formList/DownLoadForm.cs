@@ -62,14 +62,17 @@ namespace VideoSearch
             string sch;
             while (this.isDownloading)
             {
+                if (this.nowQueueIndex < this.queueList.Count)
+                {
                     sch = this.queueList[nowQueueIndex].getShcedule();
-                    this.updateListviewItem(nowQueueIndex, 1, sch.Equals("1")?"100.00":sch);
-                    this.updateListviewItem(nowQueueIndex, 2, this.queueList[nowQueueIndex].getSpeed()+" M/s");
+                    this.updateListviewItem(nowQueueIndex, 1, sch.Equals("1") ? "100.00" : sch);
+                    this.updateListviewItem(nowQueueIndex, 2, this.queueList[nowQueueIndex].getSpeed() + " M/s");
                     if (sch.Equals("1"))
                     {
                         this.updateListviewItem(nowQueueIndex, 3, "合并缓存");
                     }
-                    Thread.Sleep(100);
+                }
+                Thread.Sleep(100);
             }
         }
         private delegate void UPDATELISTVIEWITEM(int index,int columns,string value);
@@ -115,7 +118,7 @@ namespace VideoSearch
             if (this.scheduleListView.SelectedItems.Count > 0)
             {
                 Message msg = this.queueList[this.scheduleListView.SelectedItems[0].Index].cancleDownload();
-                this.updateListviewItem(nowQueueIndex, 3, msg.msg);
+                this.updateListviewItem(this.scheduleListView.SelectedItems[0].Index, 3, msg.msg);
             }
         }
 

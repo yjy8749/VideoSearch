@@ -101,8 +101,10 @@
             this.webView.Location = new System.Drawing.Point(0, 52);
             this.webView.MinimumSize = new System.Drawing.Size(20, 20);
             this.webView.Name = "webView";
+            this.webView.ScriptErrorsSuppressed = true;
             this.webView.Size = new System.Drawing.Size(676, 361);
             this.webView.TabIndex = 2;
+            this.webView.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webView_DocumentCompleted);
             this.webView.Navigated += new System.Windows.Forms.WebBrowserNavigatedEventHandler(this.webView_Navigated);
             // 
             // ExploreForm
