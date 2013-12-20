@@ -1,6 +1,7 @@
 D:\WorkSpace\VideoSearch\VideoSearch\bin\Release\VideoSearch.exe.config
 D:\WorkSpace\VideoSearch\VideoSearch\bin\Release\VideoSearch.exe
 D:\WorkSpace\VideoSearch\VideoSearch\bin\Release\VideoSearch.pdb
+D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.csprojResolveAssemblyReference.cache
 D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.AboutSoftWareForm.resources
 D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.DownLoadForm.resources
 D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.ExploreForm.resources
