@@ -129,6 +129,7 @@ namespace VideoSearch
                 }
             }
             File.Delete(Constant.SERVET_LIST_FILE_PATH);
+            File.Delete(Constant.SHARE_CONFIG_FILE_PATH);
             MessageBox.Show(MsgString.RESET_SOFTWARE_SUCCESS);
         }        
     }

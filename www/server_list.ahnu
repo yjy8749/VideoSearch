@@ -72,8 +72,12 @@
 		<url>http://202.200.82.120/</url>
 	</server>
 	<server>
-		<name>南昌工程学院</name>
+		<name>南昌工程学院1</name>
 		<url>http://10.0.90.230/</url>
+	</server>
+	<server>
+		<name>南昌工程学院2</name>
+		<url>http://10.0.80.20/</url>
 	</server>
 	<server>
 		<name>南京农业大学</name>
@@ -94,5 +98,38 @@
 	<server>
 		<name>石家庄铁道大学</name>
 		<url>http://202.206.32.234/</url>
+	</server>
+
+	<server>
+		<name>北京石油化工学院</name>
+		<url>http://210.31.32.57/</url>
+	</server>
+	<server>
+		<name>广州中医药大学</name>
+		<url>http://210.38.111.50/</url>
+	</server>
+	<server>
+		<name>华北科技学院</name>
+		<url>http://10.1.0.40/</url>
+	</server>
+	<server>
+		<name>华中师范大学</name>
+		<url>http://202.114.32.211/</url>
+	</server>
+	<server>
+		<name>中南大学</name>
+		<url>http://122.207.80.1/</url>
+	</server>
+	<server>
+		<name>湖北第二师范学院</name>
+		<url>http://1.1.1.12/</url>
+	</server>
+	<server>
+		<name>广东农工商职业技术学院</name>
+		<url>http://211.66.88.61/</url>
+	</server>
+	<server>
+		<name>长春工业大学</name>
+		<url>http://10.10.44.100/</url>
 	</server>
 </root>

@@ -35,7 +35,10 @@ namespace VideoSearch
 
         private void sourceDirText_Click(object sender, EventArgs e)
         {
-            Constant.folderBrowserDialog.ShowDialog();
+            if (Constant.folderBrowserDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
             if (this.sourceDirText.Text == null || this.sourceDirText.Text.Equals(""))
             {
                 this.sourceDirText.Text = Constant.folderBrowserDialog.SelectedPath;
@@ -59,10 +62,21 @@ namespace VideoSearch
             string myip = null;
             foreach (IPAddress ip in IpEntry.AddressList)
             {
-                if (ip.ToString().Length <= 15)
+                if (ip.ToString().StartsWith("192.168"))
                 {
                     myip = ip.ToString();
                     break;
+                }
+            }
+            if (myip == null)
+            {
+                foreach (IPAddress ip in IpEntry.AddressList)
+                {
+                    if (ip.ToString().Length <= 15)
+                    {
+                        myip = ip.ToString();
+                        break;
+                    }
                 }
             }
             if (myip != null)
@@ -75,11 +89,15 @@ namespace VideoSearch
 
         private void stopServiceLabel_Click(object sender, EventArgs e)
         {
-            this.stateLabel.Text = "正在停止服务………………";
             if (WebConstant.webService != null)
             {
+                this.stateLabel.Text = "正在停止服务………………";
                 this.stateLabel.Text = WebConstant.webService.stop();
                 WebConstant.webService = null;
+            }
+            else
+            {
+                this.stateLabel.Text = "服务没有启动";
             }
         }
 

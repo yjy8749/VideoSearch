@@ -215,12 +215,9 @@ namespace VideoSearch
 
         private void doShareRequest(ref Socket acceptSocket)
         {
-            if (shareFileList.Count == 0)
+            foreach (string dir in WebConstant.SHARE_DIRS)
             {
-                foreach (string dir in WebConstant.SHARE_DIRS)
-                {
-                    this.getDirFiles(new DirectoryInfo(dir), dir);
-                }
+                this.getDirFiles(new DirectoryInfo(dir), dir);
             }
             string str;
             string tmp = "";
@@ -289,10 +286,11 @@ namespace VideoSearch
                 }
                 if (url != null)
                 {
+                    //url = "http://127.0.0.1:8000/test.mkv";
                     if (url.EndsWith(".mp4") || url.EndsWith(".mkv")) model = "1";
                     HttpRedirectFile httpfile = new HttpRedirectFile(url, short.Parse(model), ref acceptSocket);
                     string file_type = url.Substring(url.LastIndexOf('.') + 1);
-                    this.SendHeader(httpVersion, ContentType.get(file_type), httpfile.getLength(), "200", ref acceptSocket);
+                    this.SendHeader(httpVersion, ContentType.get(file_type), "200", name + "." + file_type, ref acceptSocket);
                     httpfile.startRedirect();
                 }
             }
@@ -453,7 +451,7 @@ namespace VideoSearch
             Byte[] bSendData = Encoding.UTF8.GetBytes(sBuffer);
             SendToBrowser(bSendData, ref mySocket);
         }
-        public void SendHeader(string sHttpVersion, string sMIMEHeader, long iTotBytes, string sStatusCode,string file, ref Socket mySocket)
+        public void SendHeader(string sHttpVersion, string sMIMEHeader, string sStatusCode,string file, ref Socket mySocket)
         {
             String sBuffer = "";
             if (sMIMEHeader.Length == 0)
@@ -464,8 +462,8 @@ namespace VideoSearch
             sBuffer = sBuffer + "Server: AHNU-100705066\r\n";
             sBuffer = sBuffer + "Content-Type: " + sMIMEHeader + "\r\n";
             sBuffer = sBuffer + "Accept-Ranges: bytes\r\n";
-            sBuffer = sBuffer + "Content-Length: " + iTotBytes + "\r\n";
-            sBuffer = sBuffer + "Content-Disposition: attachment;fileName=" + file + "\r\n\r\n";
+            //sBuffer = sBuffer + "Content-Length: " + iTotBytes + "\r\n";
+            sBuffer = sBuffer + "Content-Disposition: fileName=" + file + "\r\n\r\n";
             Byte[] bSendData = Encoding.UTF8.GetBytes(sBuffer);
             SendToBrowser(bSendData, ref mySocket);
         }

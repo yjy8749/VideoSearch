@@ -1,7 +1,6 @@
 D:\WorkSpace\VideoSearch\VideoSearch\bin\Release\VideoSearch.exe.config
 D:\WorkSpace\VideoSearch\VideoSearch\bin\Release\VideoSearch.exe
 D:\WorkSpace\VideoSearch\VideoSearch\bin\Release\VideoSearch.pdb
-D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.csprojResolveAssemblyReference.cache
 D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.AboutSoftWareForm.resources
 D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.DownLoadForm.resources
 D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.ExploreForm.resources
@@ -13,3 +12,4 @@ D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.ScheduleListView.re
 D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.csproj.GenerateResource.Cache
 D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.exe
 D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.pdb
+D:\WorkSpace\VideoSearch\VideoSearch\obj\Release\VideoSearch.csprojResolveAssemblyReference.cache

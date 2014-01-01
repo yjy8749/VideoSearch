@@ -425,5 +425,14 @@ namespace VideoSearch
         {
             Process.Start(Constant.REPORT_BUG_OR_SUGGEST_URL);
         }
+
+        private void selectBehindThis_Click(object sender, EventArgs e)
+        {
+            if (this.recordList.SelectedItems.Count <= 0) return;
+            for (int index = this.recordList.SelectedItems[0].Index; index < this.recordList.Items.Count; index++)
+            {
+                this.recordList.Items[index].Checked = true;
+            }
+        }
     }
 }

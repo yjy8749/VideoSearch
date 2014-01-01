@@ -50,13 +50,15 @@
             this.analyzeMovieCata = new System.Windows.Forms.ToolStripMenuItem();
             this.showInWebView = new System.Windows.Forms.ToolStripMenuItem();
             this.movieMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.selectedOther = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyMovieCataName = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadAutoModel = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadForciblyModel = new System.Windows.Forms.ToolStripMenuItem();
             this.justDownload = new System.Windows.Forms.ToolStripMenuItem();
             this.copyDownloadUrl = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectedOther = new System.Windows.Forms.ToolStripMenuItem();
             this.fighting = new System.Windows.Forms.LinkLabel();
             this.reportBug = new System.Windows.Forms.LinkLabel();
+            this.selectBehindThis = new System.Windows.Forms.ToolStripMenuItem();
             this.recordList = new VideoSearch.ScheduleListView();
             this.sourceName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.addressAndInfo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -250,13 +252,28 @@
             // movieMenu
             // 
             this.movieMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectedOther,
+            this.copyMovieCataName,
             this.downloadAutoModel,
             this.downloadForciblyModel,
             this.justDownload,
             this.copyDownloadUrl,
-            this.selectedOther});
+            this.selectBehindThis});
             this.movieMenu.Name = "movieMenu";
-            this.movieMenu.Size = new System.Drawing.Size(213, 114);
+            this.movieMenu.Size = new System.Drawing.Size(213, 158);
+            // 
+            // selectedOther
+            // 
+            this.selectedOther.Name = "selectedOther";
+            this.selectedOther.Size = new System.Drawing.Size(212, 22);
+            this.selectedOther.Text = "全选/反选";
+            this.selectedOther.Click += new System.EventHandler(this.selectedOther_Click);
+            // 
+            // copyMovieCataName
+            // 
+            this.copyMovieCataName.Name = "copyMovieCataName";
+            this.copyMovieCataName.Size = new System.Drawing.Size(212, 22);
+            this.copyMovieCataName.Text = "复制视频名称(不带集数)";
             // 
             // downloadAutoModel
             // 
@@ -286,13 +303,6 @@
             this.copyDownloadUrl.Text = "复制下载地址";
             this.copyDownloadUrl.Click += new System.EventHandler(this.copyDownloadUrl_Click);
             // 
-            // selectedOther
-            // 
-            this.selectedOther.Name = "selectedOther";
-            this.selectedOther.Size = new System.Drawing.Size(212, 22);
-            this.selectedOther.Text = "全选/反选";
-            this.selectedOther.Click += new System.EventHandler(this.selectedOther_Click);
-            // 
             // fighting
             // 
             this.fighting.AutoSize = true;
@@ -320,6 +330,13 @@
             this.reportBug.TabStop = true;
             this.reportBug.Text = "BUG反馈";
             this.reportBug.Click += new System.EventHandler(this.reportBug_Click);
+            // 
+            // selectBehindThis
+            // 
+            this.selectBehindThis.Name = "selectBehindThis";
+            this.selectBehindThis.Size = new System.Drawing.Size(212, 22);
+            this.selectBehindThis.Text = "选择从此以下所有";
+            this.selectBehindThis.Click += new System.EventHandler(this.selectBehindThis_Click);
             // 
             // recordList
             // 
@@ -378,7 +395,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Text = "校园高清视频网视频下载工具2.1.8";
+            this.Text = "校园高清视频网视频下载工具2.2.0";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.forwardBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.backBtn)).EndInit();
@@ -428,6 +445,8 @@
         private System.Windows.Forms.ToolStripMenuItem justDownload;
         private System.Windows.Forms.LinkLabel fighting;
         private System.Windows.Forms.LinkLabel reportBug;
+        private System.Windows.Forms.ToolStripMenuItem copyMovieCataName;
+        private System.Windows.Forms.ToolStripMenuItem selectBehindThis;
     }
 }
 

@@ -154,6 +154,7 @@ namespace VideoSearch
             }
             XmlDocument xdoc = new XmlDocument();
             xdoc.LoadXml(versionFile.content);
+            int i=Constant.VERSION.CompareTo(xdoc.SelectSingleNode("root/version").InnerText);
             if (Constant.VERSION.CompareTo(xdoc.SelectSingleNode("root/version").InnerText)<0)
             {
                 MessageBoxButtons messButton = MessageBoxButtons.OKCancel;

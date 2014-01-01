@@ -66,7 +66,8 @@ namespace VideoSearch
                 if (!acceptSocket.Connected) break;
                 try
                 {
-                    acceptSocket.Send(buff, buff.Length, 0);
+                    this.SendToBrowser(buff, ref acceptSocket);
+                    buff.Initialize();
                     read = ns.Read(buff, 0, buff.Length);
                 }
                 catch
@@ -75,6 +76,20 @@ namespace VideoSearch
                 Thread.Sleep(10);
             }
             ns.Close();
+        }
+
+        public void SendToBrowser(Byte[] bSendData, ref Socket mySocket)
+        {
+            try
+            {
+                if (mySocket.Connected)
+                {
+                    mySocket.Send(bSendData, bSendData.Length, 0);
+                }
+            }
+            catch (Exception e)
+            {
+            }
         }
     }
 }

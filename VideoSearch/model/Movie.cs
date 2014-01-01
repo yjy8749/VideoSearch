@@ -22,10 +22,12 @@ namespace VideoSearch
         public string path=Constant.DEFAULT_DOWNLOAD_DIR;
         public bool cancle = false;
         public bool isAbort = false;
-        public Movie(string name,string code)
+        private int num = -1;
+        public Movie(string name,string code,int num)
         {
             this.name = name;
             this.code = code;
+            this.num = num;
             lock (locker)
             {
                 Movie.allCount++;
@@ -43,15 +45,21 @@ namespace VideoSearch
         }
         private void analyze()
         {
-            string content = HttpFileModel.load(Constant.SERVICE_ADDRESS + "return.asp?info=" + code).content;
+            string content = HttpFileModel.load(Constant.SERVICE_ADDRESS + "xy_path.asp?a="+num+"&b=" + code).content;
             if (content != null)
             {
-                XmlDocument xmlDoc = new XmlDocument();
                 try
                 {
-                    xmlDoc.LoadXml(content);
-                    this.url = Regex.Replace(xmlDoc.SelectSingleNode("root/url").InnerText, Constant.IS_USE_HTTPS ? "https://(.*?)/" : "http://(.*?)/", Constant.SERVICE_ADDRESS);
-                    if (this.url.Equals(""))
+                    string[] strArr = content.Split('|');
+                    foreach (string str in strArr)
+                    {
+                        if (str.StartsWith("http"))
+                        {
+                            this.url = str;
+                            break;
+                        }
+                    }
+                    if (this.url.Equals("")||this.url.Equals("正在解析地址"))
                     {
                         this.url = MsgString.THIS_MOVIE_NOT_EXIST;
                     }

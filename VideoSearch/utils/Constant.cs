@@ -8,7 +8,7 @@ namespace VideoSearch
 {
     class Constant
     {
-        public static readonly string VERSION = "2.1.8";
+        public static readonly string VERSION = "2.2.0";
         public static readonly string ONLINE_HELP_URL = "http://www.icehoney.me/help.html";
         public static readonly string SHARE_SERVICE_EXPLAN_URL = "http://www.icehoney.me/explanation.html";
         public static readonly string PUT_SERVER_INFO_URL = "https://docs.google.com/forms/d/1eJlE4LS-K4_DGuLe9ZYaClwCKe6_Px6YvwR_AKlQ_jE/viewform";
@@ -20,6 +20,8 @@ namespace VideoSearch
         public static readonly string TOTAL_FILE_PATH = "search_info.ahnu";
         public static readonly string CONFIG_FILE_PATH = "config.ahnu";
         public static readonly string SHARE_CONFIG_FILE_PATH = "share_config.ahnu";
+        //public static readonly string SERVER_LIST_FILE_URL = "http://127.0.0.1:8000/server_list.ahnu";
+        //public static readonly string VERSION_FILE_URL = "http://127.0.0.1:8000/version.ahnu";
         public static readonly string SERVER_LIST_FILE_URL = "http://www.icehoney.me/server_list.ahnu";
         public static readonly string VERSION_FILE_URL = "http://www.icehoney.me/version.ahnu";
         public static readonly string UPDATE_FILE_URL = "http://www.icehoney.me/ahnu_download.zip";

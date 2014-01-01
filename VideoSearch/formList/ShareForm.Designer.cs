@@ -44,7 +44,6 @@
             this.sourceDirText.BackColor = System.Drawing.Color.White;
             this.sourceDirText.Location = new System.Drawing.Point(121, 112);
             this.sourceDirText.Name = "sourceDirText";
-            this.sourceDirText.ReadOnly = true;
             this.sourceDirText.Size = new System.Drawing.Size(314, 21);
             this.sourceDirText.TabIndex = 0;
             this.sourceDirText.Click += new System.EventHandler(this.sourceDirText_Click);
@@ -105,7 +104,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(173, 12);
             this.label1.TabIndex = 5;
-            this.label1.Text = "*多个资源目录和ip请已 | 分割";
+            this.label1.Text = "*多个资源目录和ip请以 | 分割";
             // 
             // stateLabel
             // 

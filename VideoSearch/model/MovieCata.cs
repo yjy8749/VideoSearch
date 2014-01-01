@@ -50,15 +50,16 @@ namespace VideoSearch
             playurl = playurl.Replace("\r", "");
             string [] codes = playurl.Split(',');
             if (codes.Length > 2) this.isDSJ = true;
+            this.movieList.Clear();
             for (int i = 0; i < codes.Length-1; i++)
             {
                 if (this.isDSJ)
                 {
-                    this.movieList.Add(new Movie(MovieCata.formatMovieName(this.name,i,codes.Length),codes[i]));
+                    this.movieList.Add(new Movie(MovieCata.formatMovieName(this.name,i,codes.Length),this.code,i));
                 }
                 else
                 {
-                    this.movieList.Add(new Movie(this.name,codes[i]));
+                    this.movieList.Add(new Movie(this.name,this.code,i));
                 }
             }
             msg.isSucceed = true;
