@@ -40,6 +40,11 @@
             this.newResourceBtn = new System.Windows.Forms.PictureBox();
             this.allResourceBtn = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.recordList = new VideoSearch.ScheduleListView();
+            this.sourceName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.addressAndInfo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.toolsMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.decodeOrEncodeVideo = new System.Windows.Forms.ToolStripMenuItem();
             this.showDownloadFormBtn = new System.Windows.Forms.PictureBox();
             this.showExploreModelBtn = new System.Windows.Forms.PictureBox();
             this.showOnlineHelpBtn = new System.Windows.Forms.PictureBox();
@@ -56,12 +61,9 @@
             this.downloadForciblyModel = new System.Windows.Forms.ToolStripMenuItem();
             this.justDownload = new System.Windows.Forms.ToolStripMenuItem();
             this.copyDownloadUrl = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectBehindThis = new System.Windows.Forms.ToolStripMenuItem();
             this.fighting = new System.Windows.Forms.LinkLabel();
             this.reportBug = new System.Windows.Forms.LinkLabel();
-            this.selectBehindThis = new System.Windows.Forms.ToolStripMenuItem();
-            this.recordList = new VideoSearch.ScheduleListView();
-            this.sourceName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.addressAndInfo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.forwardBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.backBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.goBtn)).BeginInit();
@@ -69,6 +71,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.newResourceBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.allResourceBtn)).BeginInit();
             this.panel1.SuspendLayout();
+            this.toolsMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.showDownloadFormBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.showExploreModelBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.showOnlineHelpBtn)).BeginInit();
@@ -161,6 +164,52 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(547, 335);
             this.panel1.TabIndex = 8;
+            // 
+            // recordList
+            // 
+            this.recordList.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.recordList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.recordList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.sourceName,
+            this.addressAndInfo});
+            this.recordList.ContextMenuStrip = this.toolsMenuStrip;
+            this.recordList.FullRowSelect = true;
+            this.recordList.GridLines = true;
+            this.recordList.Location = new System.Drawing.Point(-1, 0);
+            this.recordList.Name = "recordList";
+            this.recordList.OwnerDraw = true;
+            this.recordList.ProgressColor = System.Drawing.Color.Green;
+            this.recordList.ProgressColumIndex = -1;
+            this.recordList.ProgressTextColor = System.Drawing.Color.Black;
+            this.recordList.Size = new System.Drawing.Size(547, 352);
+            this.recordList.TabIndex = 2;
+            this.recordList.UseCompatibleStateImageBehavior = false;
+            this.recordList.View = System.Windows.Forms.View.Details;
+            this.recordList.DoubleClick += new System.EventHandler(this.analyzeMovieCata_Click);
+            // 
+            // sourceName
+            // 
+            this.sourceName.Text = "资源名称";
+            this.sourceName.Width = 101;
+            // 
+            // addressAndInfo
+            // 
+            this.addressAndInfo.Text = "下载地址";
+            this.addressAndInfo.Width = 446;
+            // 
+            // toolsMenuStrip
+            // 
+            this.toolsMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.decodeOrEncodeVideo});
+            this.toolsMenuStrip.Name = "movieCataMenu";
+            this.toolsMenuStrip.Size = new System.Drawing.Size(185, 48);
+            // 
+            // decodeOrEncodeVideo
+            // 
+            this.decodeOrEncodeVideo.Name = "decodeOrEncodeVideo";
+            this.decodeOrEncodeVideo.Size = new System.Drawing.Size(184, 22);
+            this.decodeOrEncodeVideo.Text = "加密或解密现有视频";
+            this.decodeOrEncodeVideo.Click += new System.EventHandler(this.decodeOrEncodeVideo_Click);
             // 
             // showDownloadFormBtn
             // 
@@ -274,6 +323,7 @@
             this.copyMovieCataName.Name = "copyMovieCataName";
             this.copyMovieCataName.Size = new System.Drawing.Size(212, 22);
             this.copyMovieCataName.Text = "复制视频名称(不带集数)";
+            this.copyMovieCataName.Click += new System.EventHandler(this.copyMovieCataName_Click);
             // 
             // downloadAutoModel
             // 
@@ -303,6 +353,13 @@
             this.copyDownloadUrl.Text = "复制下载地址";
             this.copyDownloadUrl.Click += new System.EventHandler(this.copyDownloadUrl_Click);
             // 
+            // selectBehindThis
+            // 
+            this.selectBehindThis.Name = "selectBehindThis";
+            this.selectBehindThis.Size = new System.Drawing.Size(212, 22);
+            this.selectBehindThis.Text = "选择从此以下所有";
+            this.selectBehindThis.Click += new System.EventHandler(this.selectBehindThis_Click);
+            // 
             // fighting
             // 
             this.fighting.AutoSize = true;
@@ -331,50 +388,13 @@
             this.reportBug.Text = "BUG反馈";
             this.reportBug.Click += new System.EventHandler(this.reportBug_Click);
             // 
-            // selectBehindThis
-            // 
-            this.selectBehindThis.Name = "selectBehindThis";
-            this.selectBehindThis.Size = new System.Drawing.Size(212, 22);
-            this.selectBehindThis.Text = "选择从此以下所有";
-            this.selectBehindThis.Click += new System.EventHandler(this.selectBehindThis_Click);
-            // 
-            // recordList
-            // 
-            this.recordList.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.recordList.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.recordList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.sourceName,
-            this.addressAndInfo});
-            this.recordList.FullRowSelect = true;
-            this.recordList.GridLines = true;
-            this.recordList.Location = new System.Drawing.Point(-1, 0);
-            this.recordList.Name = "recordList";
-            this.recordList.OwnerDraw = true;
-            this.recordList.ProgressColor = System.Drawing.Color.Green;
-            this.recordList.ProgressColumIndex = -1;
-            this.recordList.ProgressTextColor = System.Drawing.Color.Black;
-            this.recordList.Size = new System.Drawing.Size(547, 352);
-            this.recordList.TabIndex = 2;
-            this.recordList.UseCompatibleStateImageBehavior = false;
-            this.recordList.View = System.Windows.Forms.View.Details;
-            this.recordList.DoubleClick += new System.EventHandler(this.analyzeMovieCata_Click);
-            // 
-            // sourceName
-            // 
-            this.sourceName.Text = "资源名称";
-            this.sourceName.Width = 101;
-            // 
-            // addressAndInfo
-            // 
-            this.addressAndInfo.Text = "下载地址";
-            this.addressAndInfo.Width = 446;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(800, 518);
+            this.ContextMenuStrip = this.toolsMenuStrip;
             this.Controls.Add(this.reportBug);
             this.Controls.Add(this.fighting);
             this.Controls.Add(this.runStateLabel);
@@ -404,6 +424,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.newResourceBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.allResourceBtn)).EndInit();
             this.panel1.ResumeLayout(false);
+            this.toolsMenuStrip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.showDownloadFormBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.showExploreModelBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.showOnlineHelpBtn)).EndInit();
@@ -447,6 +468,8 @@
         private System.Windows.Forms.LinkLabel reportBug;
         private System.Windows.Forms.ToolStripMenuItem copyMovieCataName;
         private System.Windows.Forms.ToolStripMenuItem selectBehindThis;
+        private System.Windows.Forms.ContextMenuStrip toolsMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem decodeOrEncodeVideo;
     }
 }
 

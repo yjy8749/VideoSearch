@@ -434,5 +434,27 @@ namespace VideoSearch
                 this.recordList.Items[index].Checked = true;
             }
         }
+
+        private void copyMovieCataName_Click(object sender, EventArgs e)
+        {
+            if (this.recordList.SelectedItems.Count <= 0) return;
+            Clipboard.SetDataObject(this.recordList.SelectedItems[0].Text.Split(' ')[0]);
+        }
+
+        private void decodeOrEncodeVideo_Click(object sender, EventArgs e)
+        {
+            if (Constant.openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (Constant.openFileDialog.FileNames.Length > 0)
+                {
+                    this.setRunState("正在对视频文件解密");
+                    foreach (string file in Constant.openFileDialog.FileNames)
+                    {
+                        FileCheck.tryDecodeLocalVideoFile(file);
+                    }
+                    this.setRunState("解密完成");
+                }
+            }
+        }
     }
 }

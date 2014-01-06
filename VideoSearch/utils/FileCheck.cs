@@ -49,5 +49,22 @@ namespace VideoSearch
 
             return false;
         }
+        public static bool tryDecodeLocalVideoFile(string path)
+        {
+            if (File.Exists(path))
+            {
+                FileStream fs = new FileStream(path, FileMode.Open, FileAccess.ReadWrite);
+                byte[] buff = new byte[160];
+                fs.Read(buff, 0, buff.Length);
+                for (int i = 0; i < buff.Length;i++ )
+                {
+                    buff[i] = (byte)~buff[i];
+                }
+                fs.Seek(0, SeekOrigin.Begin);
+                fs.Write(buff,0,buff.Length);
+                fs.Close();
+            }
+            return true;
+        }
     }
 }

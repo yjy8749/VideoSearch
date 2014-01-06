@@ -20,9 +20,9 @@ namespace VideoSearch
         public static readonly string TOTAL_FILE_PATH = "search_info.ahnu";
         public static readonly string CONFIG_FILE_PATH = "config.ahnu";
         public static readonly string SHARE_CONFIG_FILE_PATH = "share_config.ahnu";
-        //public static readonly string SERVER_LIST_FILE_URL = "http://127.0.0.1:8000/server_list.ahnu";
+        public static readonly string SERVER_LIST_FILE_URL = "http://127.0.0.1:8000/server_list.ahnu";
         //public static readonly string VERSION_FILE_URL = "http://127.0.0.1:8000/version.ahnu";
-        public static readonly string SERVER_LIST_FILE_URL = "http://www.icehoney.me/server_list.ahnu";
+        //public static readonly string SERVER_LIST_FILE_URL = "http://www.icehoney.me/server_list.ahnu";
         public static readonly string VERSION_FILE_URL = "http://www.icehoney.me/version.ahnu";
         public static readonly string UPDATE_FILE_URL = "http://www.icehoney.me/ahnu_download.zip";
         public static readonly string REPORT_BUG_OR_SUGGEST_URL = "https://docs.google.com/forms/d/1eJlE4LS-K4_DGuLe9ZYaClwCKe6_Px6YvwR_AKlQ_jE/viewform";
@@ -47,10 +47,12 @@ namespace VideoSearch
         public static XmlFileModel totalInfo = null;
         public static XmlFileModel config = null;
         public static readonly FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+        public static readonly OpenFileDialog openFileDialog = new OpenFileDialog();
         static Constant()
         {
             folderBrowserDialog.Description = "请选择目录";
             folderBrowserDialog.SelectedPath = DEFAULT_DOWNLOAD_DIR;
+            openFileDialog.Multiselect = true;
         }
     }
 }
